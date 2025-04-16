@@ -22,7 +22,7 @@ const MyTabs = () => {
             },
             tabBarActiveTintColor: '#2c2c2c',
             tabBarInactiveTintColor: 'grey',
-        }}>
+        }} initialRouteName='Arama'>
             <Tab.Screen
                 name="Vitrin"
                 component={ShowCasePage}

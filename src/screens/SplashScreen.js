@@ -1,4 +1,4 @@
-import { View, Image, Text } from 'react-native';
+import { View, Image, Text, SafeAreaView } from 'react-native';
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
@@ -7,10 +7,10 @@ const SplashScreen = ({ navigation }) => {
     useEffect(() => {
         setTimeout(() => {
             navigation.replace('Main');
-        }, 2000); // 2 saniye sonra Main'e geç
+        }, 300); // 2 saniye sonra Main'e geç
     }, []);
     return (
-        <View className="flex-1 bg-sahibindenyellow">
+        <SafeAreaView className="flex-1 bg-sahibindenyellow">
             <StatusBar style="dark" backgroundColor="#fee906" translucent={false} />
             <View className="flex-1 items-center justify-center">
                 <Image
@@ -23,7 +23,7 @@ const SplashScreen = ({ navigation }) => {
                 <Text className="text-2xl font-semibold text-black text-center">sahibinden.com</Text>
                 <Text className="text-sm- font-medium text-black text-center">al-sat-kirala-keşfet</Text>
             </View>
-        </View>
+        </SafeAreaView>
     );
 };
 export default SplashScreen;

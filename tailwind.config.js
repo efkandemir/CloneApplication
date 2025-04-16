@@ -9,7 +9,9 @@ module.exports = {
     extend: {
       colors: {
         'sahibindenyellow': '#fee906',
-        'sahibindenblue': '#185e91'
+        'sahibindenblue': '#185e91',
+        'sahibindengray': '#f2f2f2',
+        'dividercolor': '#cdcdcd'
       }
     },
   },
