@@ -24,7 +24,7 @@ const CategoriesPage = () => {
         {
             id: 3,
             title: 'Yedek Parça, Aksesuar, Donanım',
-            icon: 'car-wrench', // ✅ doğru
+            icon: 'car-wrench',
             color: '#27ae60',
             description: 'Otomotiv Ekipmanları, Motosiklet Ekipmanları, Deniz Ekipmanları'
         },
@@ -38,7 +38,7 @@ const CategoriesPage = () => {
         {
             id: 5,
             title: 'Yepy',
-            icon: 'recycle', // ✅ doğru
+            icon: 'recycle',
             color: '#9b59b6',
             description: 'Yepyenilenmiş teknolojik cihazlar'
         },
@@ -59,14 +59,14 @@ const CategoriesPage = () => {
         {
             id: 8,
             title: 'Özel Ders Verenler',
-            icon: 'school', // ✅ doğru
+            icon: 'school',
             color: '#2c3e50',
             description: 'Lise & Üniversite, İlkokul & Ortaokul, Yabancı Dil'
         },
         {
             id: 9,
             title: 'İş İlanları',
-            icon: 'briefcase', // ✅ doğru
+            icon: 'briefcase',
             color: '#c0392b',
             description: 'Avukatlık, Eğitim, Eğlence, Sağlık, Muhasebe'
         },
@@ -80,7 +80,7 @@ const CategoriesPage = () => {
         {
             id: 11,
             title: 'Yardımcı Arayanlar',
-            icon: 'account-group', // 🔁 yerine geçebilecek alternatif
+            icon: 'account-group',
             color: '#7f8c8d',
             description: 'Bebek & Çocuk Bakıcısı, Yaşlı & Hasta Bakıcısı, Temizlik'
         }

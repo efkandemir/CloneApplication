@@ -10,6 +10,7 @@ import ServicesPage from '../screens/ServicesPage';
 import MyAccountPage from '../screens/MyAccountPage';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import Fontisto from '@expo/vector-icons/Fontisto';
+import CategoriesDetailsPage from '../screens/CategoriesDetailsPage';
 
 
 const Tab = createBottomTabNavigator();
@@ -27,7 +28,8 @@ const MyTabs = () => {
                 name="Vitrin"
                 component={ShowCasePage}
                 options={{
-                    headerTitle: () => <CustomHeader title="Arama" />,
+                    headerTitle: () => <CustomHeader title="Vitrin" showicon={true} showTwoIcons={false} showCarIcon={false} />
+                    ,
                     headerStyle: {
                         backgroundColor: '#185e91',
                     },
@@ -40,7 +42,7 @@ const MyTabs = () => {
                 name="Arama"
                 component={CategoriesPage}
                 options={{
-                    headerTitle: () => <CustomHeader title="Arama" />,
+                    headerTitle: () => <CustomHeader title="Vitrin" showicon={true} showTwoIcons={false} showCarIcon={true} />,
                     headerStyle: {
                         backgroundColor: '#185e91',
                     },
@@ -78,7 +80,7 @@ const MyTabs = () => {
                 name="Servisler"
                 component={ServicesPage}
                 options={{
-                    headerTitle: () => <CustomHeader title="Profil" />,
+                    headerTitle: () => <CustomHeader title="Vitrin" showicon={true} showTwoIcons={false} />,
                     headerStyle: {
                         backgroundColor: '#185e91',
                     },
@@ -91,7 +93,7 @@ const MyTabs = () => {
                 name="Bana Özel"
                 component={MyAccountPage}
                 options={{
-                    headerTitle: () => <CustomHeader title="Profil" />,
+                    headerTitle: () => <CustomHeader title="Vitrin" showicon={true} showTwoIcons={false} />,
                     headerStyle: {
                         backgroundColor: '#185e91',
                     },
