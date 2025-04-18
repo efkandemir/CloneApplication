@@ -8,11 +8,17 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'sahibindenyellow': '#fee906',
-        'sahibindenblue': '#185e91',
-        'sahibindengray': '#f2f2f2',
-        'dividercolor': '#cdcdcd'
-      }
+        sahibindenyellow: "#fee906",
+        sahibindenblue: "#185e91",
+        sahibindengray: "#f2f2f2",
+        dividercolor: "#cdcdcd",
+        sahibindenblur: "#eaf4fb",
+        sahibindenilan: "#f7f7f7",
+        sahibindentextblue: "#206ca8",
+        sahibindendarkyellow: "#ffc51b",
+        sahibindentextred:'#7a2534',
+        sahibindenstatusgrey:'#7e7e7e',
+      },
     },
   },
   plugins: [],
