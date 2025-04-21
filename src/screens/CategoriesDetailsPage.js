@@ -5,14 +5,17 @@ import {
   Image,
   TouchableOpacity,
   Pressable,
+  Modal,
 } from "react-native";
 import React, { useState } from "react";
-import { Ionicons } from "@expo/vector-icons";
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
+import DetailRow from "../components/DetailRow";
+import { Linking } from "react-native";
 
 const CategoriesDetailsPage = ({ route }) => {
   const { ilan } = route.params;
   const [activeTab, setActiveTab] = useState("İlan Bilgileri");
-
+  const phoneNumber = "05431111111";
   const ilanDetay = {
     baslik: { ilan },
     satici: "DEMİR OTOMOTİV",
@@ -43,6 +46,10 @@ const CategoriesDetailsPage = ({ route }) => {
     kilometre: "1.456.249 km",
     guvenlik: "Belirtilmemiş",
     donanim: "Belirtilmemiş",
+  };
+
+  const makeCall = () => {
+    Linking.openURL(`tel:${phoneNumber}`);
   };
 
   return (
@@ -118,7 +125,7 @@ const CategoriesDetailsPage = ({ route }) => {
         </View>
         {activeTab === "İlan Bilgileri" && (
           <>
-            <View className="bg-white rounded-lg p-2 shadow-sm">
+            <View className="bg-white rounded-lg p-3 shadow-sm ">
               <View className="border-b border-gray-100 py-1">
                 <View className="flex-row justify-between items-center h-5">
                   <Text className="text-gray-500 text-sm">Fiyat</Text>
@@ -128,148 +135,57 @@ const CategoriesDetailsPage = ({ route }) => {
                 </View>
               </View>
 
-              <View className="flex-row justify-between py-3 border-b border-gray-100">
-                <Text className="text-gray-500">İlan Tarihi</Text>
-                <Text>{ilanDetay.ilanTarihi}</Text>
-              </View>
+              <DetailRow label="İlan Tarihi" value={ilanDetay.ilanTarihi} />
+              <DetailRow
+                label="İlan No"
+                value={ilanDetay.ilanNo}
+                valueColor="text-sahibindentextred"
+              />
+              <DetailRow label="Tipi" value={ilanDetay.tip} />
+              <DetailRow label="Marka" value={ilanDetay.marka} />
+              <DetailRow label="Seri" value={ilanDetay.seri} />
+              <DetailRow label="Model" value={ilanDetay.model} />
+              <DetailRow label="Yıl" value={ilanDetay.yil} />
+              <DetailRow label="Kilometre" value={ilanDetay.kilometre} />
+              <DetailRow label="Araç Durumu" value={ilanDetay.durum} />
+              <DetailRow label="Motor Hacmi" value={ilanDetay.motorHacmi} />
+              <DetailRow label="Motor Gücü" value={ilanDetay.motorGucu} />
+              <DetailRow label="Kabin Tipi" value={ilanDetay.kabinTipi} />
+              <DetailRow
+                label="Lastik Durumu"
+                value={`${ilanDetay.lastikDurumu}%`}
+              />
+              <DetailRow label="Renk" value={ilanDetay.renk} />
+              <DetailRow label="Vites" value={ilanDetay.vites} />
+              <DetailRow label="Yakıt" value={ilanDetay.yakit} />
+              <DetailRow label="Yatak Sayısı" value={ilanDetay.yatakSayisi} />
+              <DetailRow label="Dorse" value={ilanDetay.dorse} />
+              <DetailRow label="Plaka/Uyruk" value={ilanDetay.plakaUyruk} />
+              <DetailRow label="Kimden" value={ilanDetay.kimden} />
+              <DetailRow label="Takas" value={ilanDetay.takas} />
+            </View>
 
-              <View className="flex-row justify-between py-3 border-b border-gray-100">
-                <Text className="text-gray-500">İlan No</Text>
-                <Text className="font-medium text-sahibindentextred">
-                  {ilanDetay.ilanNo}
+            <View className="top-2 mb-16">
+              <View className="bg-sahibindengray">
+                <Text className="text-gray-500 text-lg font-normal left-3">
+                  ÖZELLİKLER
                 </Text>
               </View>
-
-              <View className="flex-row justify-between py-3 border-b border-gray-100">
-                <Text className="text-gray-500">Tipi</Text>
-                <Text className="text-sahibindenstatusgrey">
-                  {ilanDetay.tip}
-                </Text>
-              </View>
-
-              <View className="flex-row justify-between py-3 border-b border-gray-100">
-                <Text className="text-gray-500">Marka</Text>
-                <Text className="text-sahibindenstatusgrey">
-                  {ilanDetay.marka}
-                </Text>
-              </View>
-
-              <View className="flex-row justify-between py-3 border-b border-gray-100">
-                <Text className="text-gray-500">Seri</Text>
-                <Text className="text-sahibindenstatusgrey">
-                  {ilanDetay.seri}
-                </Text>
-              </View>
-
-              <View className="flex-row justify-between py-3 border-b border-gray-100">
-                <Text className="text-gray-500">Model</Text>
-                <Text className="text-sahibindenstatusgrey">
-                  {ilanDetay.model}
-                </Text>
-              </View>
-
-              <View className="flex-row justify-between py-3">
-                <Text className="text-gray-500">Yıl</Text>
-                <Text className="text-sahibindenstatusgrey">
-                  {ilanDetay.yil}
-                </Text>
-              </View>
-
-              <View className="flex-row justify-between py-3">
-                <Text className="text-gray-500">Kilometre</Text>
-                <Text className="text-sahibindenstatusgrey">
-                  {ilanDetay.kilometre}
-                </Text>
-              </View>
-              <View className="flex-row justify-between py-3 border-b border-gray-100">
-                <Text className="text-gray-500">Araç Durumu</Text>
-                <Text className="text-sahibindenstatusgrey">
-                  {ilanDetay.durum}
-                </Text>
-              </View>
-
-              <View className="flex-row justify-between py-3 border-b border-gray-100">
-                <Text className="text-gray-500">Motor Hacmi</Text>
-                <Text className="text-sahibindenstatusgrey">
-                  {ilanDetay.motorHacmi}
-                </Text>
-              </View>
-
-              <View className="flex-row justify-between py-3 border-b border-gray-100">
-                <Text className="text-gray-500">Motor Gücü</Text>
-                <Text className="text-sahibindenstatusgrey">
-                  {ilanDetay.motorGucu}
-                </Text>
-              </View>
-
-              <View className="flex-row justify-between py-3 border-b border-gray-100">
-                <Text className="text-gray-500">Kabin Tipi</Text>
-                <Text className="text-sahibindenstatusgrey">
-                  {ilanDetay.kabinTipi}
-                </Text>
-              </View>
-
-              <View className="flex-row justify-between py-3 border-b border-gray-100">
-                <Text className="text-gray-500">Lastik Durumu</Text>
-                <Text className="text-sahibindenstatusgrey">
-                  {ilanDetay.lastikDurumu}%
-                </Text>
-              </View>
-
-              <View className="flex-row justify-between py-3 border-b border-gray-100">
-                <Text className="text-gray-500">Renk</Text>
-                <Text className="text-sahibindenstatusgrey">
-                  {ilanDetay.renk}
-                </Text>
-              </View>
-
-              <View className="flex-row justify-between py-3 border-b border-gray-100">
-                <Text className="text-gray-500">Vites</Text>
-                <Text className="text-sahibindenstatusgrey">
-                  {ilanDetay.vites}
-                </Text>
-              </View>
-
-              <View className="flex-row justify-between py-3 border-b border-gray-100">
-                <Text className="text-gray-500">Yakıt</Text>
-                <Text className="text-sahibindenstatusgrey">
-                  {ilanDetay.yakit}
-                </Text>
-              </View>
-
-              <View className="flex-row justify-between py-3 border-b border-gray-100">
-                <Text className="text-gray-500">Yatak Sayısı</Text>
-                <Text className="text-sahibindenstatusgrey">
-                  {ilanDetay.yatakSayisi}
-                </Text>
-              </View>
-
-              <View className="flex-row justify-between py-3 border-b border-gray-100">
-                <Text className="text-gray-500">Dorse</Text>
-                <Text className="text-sahibindenstatusgrey">
-                  {ilanDetay.dorse}
-                </Text>
-              </View>
-
-              <View className="flex-row justify-between py-3 border-b border-gray-100">
-                <Text className="text-gray-500">Plaka/Uyruk</Text>
-                <Text className="text-sahibindenstatusgrey">
-                  {ilanDetay.plakaUyruk}
-                </Text>
-              </View>
-
-              <View className="flex-row justify-between py-3 border-b border-gray-100">
-                <Text className="text-gray-500">Kimden</Text>
-                <Text className="text-sahibindenstatusgrey">
-                  {ilanDetay.kimden}
-                </Text>
-              </View>
-
-              <View className="flex-row justify-between py-3">
-                <Text className="text-gray-500">Takas</Text>
-                <Text className="text-sahibindenstatusgrey">
-                  {ilanDetay.takas}
-                </Text>
+              <View className="bg-white">
+                <View>
+                  <Text className="text-black ml-3 text-base">Güvenlik</Text>
+                  <Text className="text-gray-500 ml-3 text-base">
+                    Belirtilmemiş
+                  </Text>
+                  <View className="border-b border-gray-100" />
+                </View>
+                <View className="h-20">
+                  <Text className="text-black ml-3 text-base">Donanım</Text>
+                  <Text className="text-gray-500 ml-3 text-base">
+                    Belirtilmemiş
+                  </Text>
+                </View>
+                <View className="border-b border-gray-200" />
               </View>
             </View>
           </>
@@ -292,6 +208,24 @@ const CategoriesDetailsPage = ({ route }) => {
           </View>
         )}
       </ScrollView>
+      <View className="absolute bottom-0  flex-row px-4 py-8 border-gray-200">
+        <Pressable
+          className="flex-1 bg-sahibindenblue py-3 mr-2 items-center justify-center flex-row "
+          onPress={makeCall}
+        >
+          <Text className="text-white font-bold ml-2">Ara</Text>
+        </Pressable>
+
+        <Pressable
+          className="flex-1 bg-sahibindenblue py-3  items-center justify-center flex-row"
+          onPress={() => console.log("Mesaj butonuna basıldı")}
+        >
+          <Text className="text-white font-bold ml-2">Mesaj Gönder</Text>
+        </Pressable>
+        <Pressable className="bg-sahibindenyellow rounded-full w-11 h-11 items-center justify-center mr-[-9px] ml-2 border">
+          <FontAwesome5 name="car-alt" size={24} color="black" />
+        </Pressable>
+      </View>
     </View>
   );
 };
