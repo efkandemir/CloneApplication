@@ -1,11 +1,19 @@
-import { View, TextInput, FlatList, StatusBar } from "react-native";
-import React from "react";
+import {
+  View,
+  TextInput,
+  FlatList,
+  StatusBar,
+  TouchableOpacity,
+} from "react-native";
+import React, { use } from "react";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { SafeAreaView } from "react-native";
 import CategoryRow from "../components/CategoryRow";
+import { useNavigation } from "@react-navigation/native";
 
 const CategoriesPage = () => {
+  const navigation = useNavigation();
   const categories = [
     {
       id: 1,
@@ -87,6 +95,15 @@ const CategoriesPage = () => {
       description: "Bebek & Çocuk Bakıcısı, Yaşlı & Hasta Bakıcısı, Temizlik",
     },
   ];
+  const handleCategoryPress = (item) => {
+    if (item.id === 1) {
+      navigation.navigate("EmlakScreen");
+    } else if (item.id === 2) {
+      navigation.navigate("VasitaScreen");
+    } else {
+      console.log(item.id);
+    }
+  };
 
   const renderHeader = () => (
     <>
@@ -114,12 +131,14 @@ const CategoriesPage = () => {
         data={categories}
         ListHeaderComponent={renderHeader}
         renderItem={({ item }) => (
-          <CategoryRow
-            title={item.title}
-            icon={item.icon}
-            description={item.description}
-            color={item.color}
-          />
+          <TouchableOpacity onPress={() => handleCategoryPress(item)}>
+            <CategoryRow
+              title={item.title}
+              icon={item.icon}
+              description={item.description}
+              color={item.color}
+            />
+          </TouchableOpacity>
         )}
         keyExtractor={(item) => item.id.toString()}
         showsVerticalScrollIndicator={false}

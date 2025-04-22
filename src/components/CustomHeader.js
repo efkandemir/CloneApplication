@@ -1,17 +1,17 @@
-import { View, Text, Image } from 'react-native';
-import React from 'react';
-import Ionicons from '@expo/vector-icons/Ionicons';
+import { View, Text, Image } from "react-native";
+import React from "react";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 const CustomHeader = ({ title, showicon, showTwoIcons, showCarIcon }) => {
   return (
     <View className="flex-row items-center justify-between w-full h-12 ">
       {showicon && (
         <Image
-          source={require('../../assets/images/sahibinden.png')}
+          source={require("../../assets/images/sahibinden.png")}
           className="w-7 h-7 ml-[-6px]"
         />
       )}
-      <View className="flex-1 items-center justify-center ">
+      <View className="flex-1 items-center justify-center ml-1 ">
         <Text className="text-lg font-bold text-white">{title}</Text>
       </View>
       <View className="flex-row space-x-1">
@@ -25,7 +25,6 @@ const CustomHeader = ({ title, showicon, showTwoIcons, showCarIcon }) => {
         ) : !showicon && !showTwoIcons && !showCarIcon ? (
           <View className="w-6" />
         ) : (
-
           <View className="w-6" />
         )}
       </View>

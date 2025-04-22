@@ -1,5 +1,10 @@
 import React from "react";
-import { View, Text, FlatList, Pressable } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 
@@ -21,7 +26,7 @@ const services = [
 ];
 
 const ServiceItem = ({ title, description, icon }) => (
-  <Pressable className="flex-row items-center justify-between bg-white p-3 border-b border-gray-200">
+  <TouchableOpacity className="flex-row items-center justify-between bg-white p-3 border-b border-gray-200">
     <View className="flex-row items-start space-x-3 flex-1">
       <View className="bg-yellow-400 border rounded-full w-10 h-10 justify-center items-center">
         <FontAwesome5 name={icon} size={24} color="black" />
@@ -32,7 +37,7 @@ const ServiceItem = ({ title, description, icon }) => (
       </View>
     </View>
     <Ionicons name="chevron-forward" size={20} color="#999" />
-  </Pressable>
+  </TouchableOpacity>
 );
 
 const ServicesPage = () => {
