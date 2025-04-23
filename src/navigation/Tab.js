@@ -1,6 +1,5 @@
 import { View } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import CategoriesPage from "../screens/CategoriesPage";
 import CustomHeader from "../components/CustomHeader";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
@@ -10,7 +9,7 @@ import ServicesPage from "../screens/ServicesPage";
 import MyAccountPage from "../screens/MyAccountPage";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Fontisto from "@expo/vector-icons/Fontisto";
-import CategoriesDetailsPage from "../screens/CategoriesDetailsPage";
+import SearchStackNavigator from "./SearchStackNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -52,16 +51,9 @@ const MyTabs = () => {
       />
       <Tab.Screen
         name="Arama"
-        component={CategoriesPage}
+        component={SearchStackNavigator}
         options={{
-          headerTitle: () => (
-            <CustomHeader
-              title="Vitrin"
-              showicon={true}
-              showTwoIcons={false}
-              showCarIcon={true}
-            />
-          ),
+          headerShown: false,
           headerStyle: {
             backgroundColor: "#185e91",
           },
@@ -81,13 +73,13 @@ const MyTabs = () => {
           tabBarIcon: ({ color, size }) => (
             <View
               style={{
-                backgroundColor: "white", // Ovalin arka plan rengi
+                backgroundColor: "white",
                 width: 45,
                 height: 40,
                 borderRadius: 30,
                 justifyContent: "center",
                 alignItems: "center",
-                marginTop: -25, // Üstte görünmesi için
+                marginTop: -25,
               }}
             >
               <MaterialIcons name="add-circle" size={38} color="#185e91" />
@@ -100,7 +92,12 @@ const MyTabs = () => {
         component={ServicesPage}
         options={{
           headerTitle: () => (
-            <CustomHeader title="Vitrin" showicon={true} showTwoIcons={false} />
+            <CustomHeader
+              title="Servisler"
+              showicon={true}
+              showTwoIcons={false}
+              showCarIcon={false}
+            />
           ),
           headerStyle: {
             backgroundColor: "#185e91",
