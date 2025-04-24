@@ -1,6 +1,7 @@
 import { SafeAreaView, ScrollView, TouchableOpacity } from "react-native";
 import React from "react";
 import CategoryRow from "../components/CategoryRow";
+import { useNavigation } from "@react-navigation/native";
 
 const markalar = [
   { title: "Audi", icon: "Audi", description: "(15.905)" },
@@ -35,13 +36,16 @@ const markalar = [
 ];
 
 const OtomobilPage = () => {
+  const navigation = useNavigation();
   return (
     <SafeAreaView className="flex-1 bg-white">
       <ScrollView>
         {markalar.map((item, index) => (
           <TouchableOpacity
             key={`vasita-${index}`}
-            onPress={() => console.log(item.title + "'a tıklandı")}
+            onPress={() =>
+              navigation.navigate("OtomobilModel", { marka: item.title })
+            }
           >
             <CategoryRow
               title={item.title}

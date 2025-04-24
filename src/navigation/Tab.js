@@ -66,7 +66,14 @@ const MyTabs = () => {
         name="İlan Ver"
         component={PostAd}
         options={{
-          headerTitle: () => <CustomHeader title="Arama" />,
+          headerTitle: () => (
+            <CustomHeader
+              title="İlan Ver"
+              showicon={true}
+              showTwoIcons={false}
+              showCarIcon={false}
+            />
+          ),
           headerStyle: {
             backgroundColor: "#185e91",
           },

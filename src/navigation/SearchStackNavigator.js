@@ -5,6 +5,7 @@ import { EmlakScreen, VasitaScreen } from "../screens/VasitaEmlakPage";
 import OtomobilPage from "../screens/OtomobilPage";
 import CustomHeader from "../components/CustomHeader";
 import CategoriesPage from "../screens/CategoriesPage";
+import OtomobilModel from "../screens/OtomobilModel";
 
 const Stack = createNativeStackNavigator();
 const SearchStackNavigator = () => {
@@ -80,6 +81,26 @@ const SearchStackNavigator = () => {
               showicon={false}
               showTwoIcons={true}
               showCarIcon={true}
+            />
+          ),
+          headerStyle: {
+            backgroundColor: "#185e91",
+          },
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="person" size={size} color={color} />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="OtomobilModel"
+        component={OtomobilModel}
+        options={{
+          headerTitle: () => (
+            <CustomHeader
+              title="Arama Sonucu"
+              showicon={false}
+              showTwoIcons={true}
+              showCarIcon={false}
             />
           ),
           headerStyle: {
