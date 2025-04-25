@@ -6,7 +6,7 @@ import { useEffect } from "react";
 const PostAd = () => {
   const navigation = useNavigation();
   useEffect(() => {
-    navigation.navigate("LoginPage");
+    navigation.navigate("LoginPage",{details:"postadd"});
   }, []);
 
   return (

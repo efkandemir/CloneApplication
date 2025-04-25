@@ -9,21 +9,28 @@ import React, { useState } from "react";
 import CustomInput from "../components/CustomInput";
 import { useNavigation } from "@react-navigation/native";
 
-const LoginPage = () => {
+const LoginPage = ({ route }) => {
+  const { details } = route.params;
   const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-100 p-4">
+    <SafeAreaView className="flex-1 bg-sahibindengray p-4">
       <Pressable
         className="absolute top-12 right-4"
-        onPress={() => navigation.goBack()}
+        onPress={() => {
+          if (details === "myaccounts") {
+            navigation.navigate("Main", { screen: "Bana Özel" });
+          } else {
+            navigation.navigate("Main", { screen: "Arama" });
+          }
+        }}
       >
         <Text className="text-black text-2xl">✕</Text>
       </Pressable>
 
-      <View className=" mx-4 my-16 bg-yellow-400">
+      <View className=" mx-4 my-16 bg-sahibindengray">
         <Text className="text-xl font-bold">İlan vermek için</Text>
         <Text className="text-xl font-bold mb-6">Giriş yapın</Text>
 

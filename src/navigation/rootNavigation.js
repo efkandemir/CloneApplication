@@ -8,6 +8,7 @@ import CustomHeader from "../components/CustomHeader";
 import { EmlakScreen, VasitaScreen } from "../screens/VasitaEmlakPage";
 import OtomobilPage from "../screens/OtomobilPage";
 import LoginPage from "../screens/LoginPage";
+import RegisterScreen from "../screens/RegisterScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -45,6 +46,11 @@ const RootNavigation = () => {
         <Stack.Screen
           name="LoginPage"
           component={LoginPage}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="RegisterPage"
+          component={RegisterScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 const SectionHeader = ({ title }) => (
   <View className="bg-sahibindengray px-4 py-2">
@@ -10,19 +11,32 @@ const SectionHeader = ({ title }) => (
   </View>
 );
 
-const MenuItem = ({ label, isNew }) => (
-  <TouchableOpacity className="flex-row items-center justify-between bg-white px-4 py-3 border-b border-gray-200">
-    <Text className="text-black">{label}</Text>
-    <View className="flex-row items-center space-x-1">
-      {isNew && (
-        <View className="bg-red-500 rounded px-1.5 py-0.5">
-          <Text className="text-white text-[10px] font-bold">yeni</Text>
-        </View>
-      )}
-      <Ionicons name="chevron-forward" size={18} color="#ccc" />
-    </View>
-  </TouchableOpacity>
-);
+function MenuItem({ label, isNew }) {
+  const navigation = useNavigation();
+
+  return (
+    <TouchableOpacity
+      className="flex-row items-center justify-between bg-white px-4 py-3 border-b border-gray-200"
+      onPress={() => {
+        if (label === "Giriş Yap") {
+          navigation.navigate("LoginPage", { details: "myaccounts" });
+        } else if (label === "Hesap Aç") {
+          navigation.navigate("RegisterPage");
+        }
+      }}
+    >
+      <Text className="text-black">{label}</Text>
+      <View className="flex-row items-center space-x-1">
+        {isNew && (
+          <View className="bg-red-500 rounded px-1.5 py-0.5">
+            <Text className="text-white text-[10px] font-bold">yeni</Text>
+          </View>
+        )}
+        <Ionicons name="chevron-forward" size={18} color="#ccc" />
+      </View>
+    </TouchableOpacity>
+  );
+}
 
 const MyAccountPage = () => {
   return (
