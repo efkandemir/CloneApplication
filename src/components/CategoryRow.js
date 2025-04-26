@@ -83,7 +83,7 @@ const CategoryRow = ({ title, icon, description, color, section }) => {
   const isBrand = brandLogos[title];
 
   return (
-    <SafeAreaView className="flex-row items-center bg-sahibin rounded-lg pt-0 mb-2 h-auto px-4 py-2 m-2">
+    <SafeAreaView className="flex-row items-center bg-sahibin rounded-lg pt-0 mb-2 h-auto px-1 py-1 m-2">
       {isBrand ? (
         <View className="w-9 h-9 items-center justify-center rounded-full mr-4">
           <Image

@@ -9,8 +9,10 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
+import { UsePreventGoBack } from "../components/UsePreventGoBack";
 
 const RegisterScreen = () => {
+  UsePreventGoBack();
   const navigation = useNavigation();
   const [agreed, setAgreed] = useState(false);
   const [marketing, setMarketing] = useState(false);

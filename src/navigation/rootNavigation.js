@@ -5,8 +5,6 @@ import SplashScreen from "../screens/SplashScreen";
 import MyTabs from "./Tab";
 import CategoriesDetailsPage from "../screens/CategoriesDetailsPage";
 import CustomHeader from "../components/CustomHeader";
-import { EmlakScreen, VasitaScreen } from "../screens/VasitaEmlakPage";
-import OtomobilPage from "../screens/OtomobilPage";
 import LoginPage from "../screens/LoginPage";
 import RegisterScreen from "../screens/RegisterScreen";
 
@@ -24,7 +22,7 @@ const RootNavigation = () => {
         <Stack.Screen
           name="Main"
           component={MyTabs}
-          options={{ headerShown: false }}
+          options={{ headerShown: false, gestureEnabled: false }}
         />
         <Stack.Screen
           name="CategoriesDetails"

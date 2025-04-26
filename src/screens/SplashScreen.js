@@ -7,7 +7,7 @@ const SplashScreen = ({ navigation }) => {
     useEffect(() => {
         setTimeout(() => {
             navigation.replace('Main');
-        }, 300); // 2 saniye sonra Main'e geç
+        }, 300);
     }, []);
     return (
         <SafeAreaView className="flex-1 bg-sahibindenyellow">

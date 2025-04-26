@@ -4,16 +4,26 @@ import {
   FlatList,
   StatusBar,
   TouchableOpacity,
+  Modal,
+  Text,
 } from "react-native";
-import React, { use } from "react";
+import React, { useEffect, useState } from "react";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { SafeAreaView } from "react-native";
 import CategoryRow from "../components/CategoryRow";
 import { useNavigation } from "@react-navigation/native";
 
-const CategoriesPage = () => {
+const CategoriesPage = ({ route }) => {
+  const { showModal } = route.params || {};
+  console.log(showModal);
+  const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation();
+  useEffect(() => {
+    if (showModal) {
+      setModalVisible(true);
+    }
+  }, [showModal]);
   const categories = [
     {
       id: 1,
@@ -35,8 +45,7 @@ const CategoriesPage = () => {
       title: "Yedek Parça, Aksesuar, Donanım",
       icon: "car-wrench",
       color: "#27ae60",
-      description:
-        "Otomotiv Ekipmanları, Motosiklet Ekipmanları, Deniz Ekipmanları",
+      description: "Otomotiv Ekipmanları, Motosiklet Ekipmanları, Deniz ..",
     },
     {
       id: 4,
@@ -108,6 +117,30 @@ const CategoriesPage = () => {
   const renderHeader = () => (
     <>
       <View className="flex-row items-center bg-sahibindengray rounded-xl px-3 m-2">
+        <Modal
+          transparent
+          animationType="fade"
+          visible={modalVisible}
+          onRequestClose={() => setModalVisible(false)}
+        >
+          <View className="flex-1 bg-black/50 justify-center items-center">
+            <View className="bg-white p-6 rounded-2xl w-4/5 items-center">
+              <Text className="text-xl font-bold mb-4 text-center">
+                Oturum Kapalı
+              </Text>
+              <Text className="items-center justify-center">
+                Bu özellik uygulamaya giriş yapmayı gerektirir.
+              </Text>
+              <View className="h-[1px] w-full bg-gray-500 " />
+              <TouchableOpacity
+                className="bg-white px-6 py-3 rounded-xl mt-4"
+                onPress={() => setModalVisible(false)}
+              >
+                <Text className="text-sahibindenblue font-semibold">Tamam</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
         <AntDesign name="search1" size={20} color="gray" />
         <TextInput
           placeholder="Kelime veya ilan No. ile ara"

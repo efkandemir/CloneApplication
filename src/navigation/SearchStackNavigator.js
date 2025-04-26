@@ -20,7 +20,7 @@ const SearchStackNavigator = () => {
               title="Arama"
               showicon={true}
               showTwoIcons={false}
-              showCarIcon={false}
+              showCarIcon={true}
             />
           ),
           headerStyle: {

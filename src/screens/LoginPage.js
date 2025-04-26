@@ -8,8 +8,10 @@ import {
 import React, { useState } from "react";
 import CustomInput from "../components/CustomInput";
 import { useNavigation } from "@react-navigation/native";
+import { UsePreventGoBack } from "../components/UsePreventGoBack";
 
 const LoginPage = ({ route }) => {
+  UsePreventGoBack();
   const { details } = route.params;
   const navigation = useNavigation();
   const [email, setEmail] = useState("");
@@ -23,7 +25,13 @@ const LoginPage = ({ route }) => {
           if (details === "myaccounts") {
             navigation.navigate("Main", { screen: "Bana Özel" });
           } else {
-            navigation.navigate("Main", { screen: "Arama" });
+            navigation.navigate("Main", {
+              screen: "Arama",
+              params: {
+                screen: "CategoriesPage",
+                params: { showModal: true },
+              },
+            });
           }
         }}
       >
