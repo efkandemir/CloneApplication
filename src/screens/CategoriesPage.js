@@ -115,7 +115,7 @@ const CategoriesPage = ({ route }) => {
   };
 
   const renderHeader = () => (
-    <>
+    <View className="bg-white">
       <View className="flex-row items-center bg-sahibindengray rounded-xl px-3 m-2">
         <Modal
           transparent
@@ -144,7 +144,7 @@ const CategoriesPage = ({ route }) => {
         <AntDesign name="search1" size={20} color="gray" />
         <TextInput
           placeholder="Kelime veya ilan No. ile ara"
-          className="flex-1 pl-2 py-2"
+          className="flex-1 pl-2 py-2 bg"
           placeholderTextColor="#888"
         />
         <MaterialCommunityIcons
@@ -154,24 +154,26 @@ const CategoriesPage = ({ route }) => {
         />
       </View>
       <View className="w-full h-px bg-dividercolor my-[3px]" />
-    </>
+    </View>
   );
 
   return (
-    <SafeAreaView className="flex-1 bg-white p-2">
+    <SafeAreaView className="flex-1 bg-sahibindengray p-2">
       <StatusBar style="dark" backgroundColor="#185e91" translucent={false} />
       <FlatList
         data={categories}
         ListHeaderComponent={renderHeader}
         renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => handleCategoryPress(item)}>
-            <CategoryRow
-              title={item.title}
-              icon={item.icon}
-              description={item.description}
-              color={item.color}
-            />
-          </TouchableOpacity>
+          <View className="bg-white">
+            <TouchableOpacity onPress={() => handleCategoryPress(item)}>
+              <CategoryRow
+                title={item.title}
+                icon={item.icon}
+                description={item.description}
+                color={item.color}
+              />
+            </TouchableOpacity>
+          </View>
         )}
         keyExtractor={(item) => item.id.toString()}
         showsVerticalScrollIndicator={false}

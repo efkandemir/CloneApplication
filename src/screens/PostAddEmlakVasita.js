@@ -1,6 +1,9 @@
 import {
+  View,
+  Text,
   SafeAreaView,
   TouchableOpacity,
+  ScrollView,
   FlatList,
 } from "react-native";
 import React from "react";
@@ -37,67 +40,59 @@ const vasitaData = [
   { title: "Engelli Plakalı Araçlar", description: "(209)" },
 ];
 
-const EmlakScreen = () => {
-  const renderItem = ({ item, index }) => (
-    <TouchableOpacity
-      onPress={() => {
-        console.log(index + ".index seçildi");
-      }}
-    >
-      <CategoryRow
-        title={item.title}
-        description={item.description}
-        icon=""
-        section="vasitaoremlak"
-      />
-    </TouchableOpacity>
-  );
-
+const PostAddEmlak = () => {
   return (
     <SafeAreaView className="flex-1 bg-sahibindengray">
       <FlatList
         data={emlakData}
-        renderItem={renderItem}
         keyExtractor={(item, index) => `emlak-${index}`}
-        contentContainerStyle={{ backgroundColor: "white" }}
+        renderItem={({ item, index }) => (
+          <View className="bg-white">
+            <TouchableOpacity onPress={() => {}}>
+              <CategoryRow
+                title={item.title}
+                description={item.description}
+                icon=""
+                section="vasitaoremlak"
+              />
+            </TouchableOpacity>
+          </View>
+        )}
       />
     </SafeAreaView>
   );
 };
 
-const VasitaScreen = () => {
+const PostAddVasita = () => {
   const navigation = useNavigation();
-
-  const renderItem = ({ item, index }) => (
-    <TouchableOpacity
-      onPress={() => {
-        if (item.title === "Otomobil") {
-          navigation.navigate("OtomobilDetails");
-        } else {
-          console.log(item.title + " tıklandı");
-        }
-      }}
-    >
-      <CategoryRow
-        title={item.title}
-        description={item.description}
-        icon=""
-        color={item.color}
-        section="vasitaoremlak"
-      />
-    </TouchableOpacity>
-  );
-
   return (
     <SafeAreaView className="flex-1 bg-sahibindengray">
       <FlatList
         data={vasitaData}
-        renderItem={renderItem}
         keyExtractor={(item, index) => `vasita-${index}`}
-        contentContainerStyle={{ backgroundColor: "white" }}
+        renderItem={({ item, index }) => (
+          <View className="bg-white">
+            <TouchableOpacity
+              onPress={() => {
+                if (item.title === "Otomobil") {
+                  navigation.navigate("PostAddOtomobil");
+                } else {
+                  console.log(item.title + " tıklandı");
+                }
+              }}
+            >
+              <CategoryRow
+                title={item.title}
+                description={item.description}
+                icon=""
+                section="vasitaoremlak"
+              />
+            </TouchableOpacity>
+          </View>
+        )}
       />
     </SafeAreaView>
   );
 };
 
-export { EmlakScreen, VasitaScreen };
+export { PostAddEmlak, PostAddVasita };

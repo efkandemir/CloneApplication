@@ -4,12 +4,13 @@ import CustomHeader from "../components/CustomHeader";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import ShowCasePage from "../screens/ShowCasePage";
-import PostAd from "../screens/PostAd";
+import PostAdd from "../screens/PostAdd";
 import ServicesPage from "../screens/ServicesPage";
 import MyAccountPage from "../screens/MyAccountPage";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Fontisto from "@expo/vector-icons/Fontisto";
 import SearchStackNavigator from "./SearchStackNavigator";
+import PostAddNavigator from "./PostAddNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -64,7 +65,7 @@ const MyTabs = () => {
       />
       <Tab.Screen
         name="İlan Ver"
-        component={PostAd}
+        component={PostAddNavigator}
         options={{
           headerTitle: () => (
             <CustomHeader

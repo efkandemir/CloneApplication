@@ -1,4 +1,10 @@
-import { SafeAreaView, ScrollView, TouchableOpacity } from "react-native";
+import {
+  SafeAreaView,
+  ScrollView,
+  TouchableOpacity,
+  View,
+  FlatList,
+} from "react-native";
 import React from "react";
 import CategoryRow from "../components/CategoryRow";
 import { useNavigation } from "@react-navigation/native";
@@ -38,24 +44,28 @@ const markalar = [
 const OtomobilPage = () => {
   const navigation = useNavigation();
   return (
-    <SafeAreaView className="flex-1 bg-white">
-      <ScrollView>
-        {markalar.map((item, index) => (
-          <TouchableOpacity
-            key={`vasita-${index}`}
-            onPress={() =>
-              navigation.navigate("OtomobilModel", { marka: item.title })
-            }
-          >
-            <CategoryRow
-              title={item.title}
-              description={item.description}
-              color={item.color}
-              section="vasitaoremlak"
-            />
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
+    <SafeAreaView className="flex-1 bg-sahibindengray">
+      <FlatList
+        data={markalar}
+        keyExtractor={(item, index) => `vasita-${index}`}
+        renderItem={({ item, index }) => (
+          <View className="bg-white">
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate("OtomobilModel", { marka: item.title })
+              }
+            >
+              <CategoryRow
+                title={item.title}
+                description={item.description}
+                color={item.color}
+                section="vasitaoremlak"
+              />
+            </TouchableOpacity>
+          </View>
+        )}
+        showsVerticalScrollIndicator={false}
+      />
     </SafeAreaView>
   );
 };

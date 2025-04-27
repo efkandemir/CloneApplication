@@ -16,6 +16,18 @@ const LoginPage = ({ route }) => {
   const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [status, setStatus] = useState(false);
+
+  const handlePostAdd = () => {
+    setStatus(false);
+    navigation.navigate("Main", {
+      screen: "İlan Ver",
+      params: {
+        screen: "PostAdd",
+        params: { visible: true },
+      },
+    });
+  };
 
   return (
     <SafeAreaView className="flex-1 bg-sahibindengray p-4">
@@ -59,7 +71,10 @@ const LoginPage = ({ route }) => {
           <Text className="text-blue-600 text-right">Şifremi Unuttum</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity className="bg-blue-600 py-4 rounded-md mb-4">
+        <TouchableOpacity
+          className="bg-blue-600 py-4 rounded-md mb-4"
+          onPress={() => handlePostAdd()}
+        >
           <Text className="text-white text-center font-semibold">
             E-posta ile giriş yap
           </Text>

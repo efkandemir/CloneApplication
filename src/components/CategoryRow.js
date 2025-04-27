@@ -104,18 +104,23 @@ const CategoryRow = ({ title, icon, description, color, section }) => {
         </View>
       ) : null}
 
-      {section == "vasitaoremlak" ? (
-        <View className="flex-1">
+      {section === "vasitaoremlak" ? (
+        <View className="flex-1 p-1">
           <View className="flex-row justify-between items-center">
-            <Text className="text-lg font-normal">{title}</Text>
+            <Text className="text-base font-normal">{title}</Text>
             <Text className="text-gray-500 text-xs">{description}</Text>
           </View>
           <View className="bg-sahibindengray w-full h-[2px] mt-1" />
         </View>
-      ) : (
-        <View className="flex-1">
-          <Text className="text-lg font-normal">{title}</Text>
+      ) : description ? (
+        <View className="flex-1 p-1">
+          <Text className="text-base font-normal">{title}</Text>
           <Text className="text-gray-500 text-xs">{description}</Text>
+          <View className="bg-sahibindengray w-full h-[2px] mt-1" />
+        </View>
+      ) : (
+        <View className="flex-1 p-1">
+          <Text className="text-base font-normal">{title}</Text>
           <View className="bg-sahibindengray w-full h-[2px] mt-1" />
         </View>
       )}
