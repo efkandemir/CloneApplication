@@ -95,9 +95,17 @@ const PostAdd = ({ route }) => {
           />
         </View>
       </View>
+
       <StatusBar style="dark" backgroundColor="#185e91" translucent={false} />
       <FlatList
         data={categories}
+        ListHeaderComponent={
+          <View className="px-4 bg-sahibindengray border-b border-gray-200 h-10 justify-end">
+            <Text className="text-xs font-bold text-sahibindenstatusgrey pb-1">
+              ADIM ADIM KATEGORİ SEÇİMİ
+            </Text>
+          </View>
+        }
         renderItem={({ item }) => (
           <View className="bg-white ">
             <TouchableOpacity onPress={() => handleCategoryPress(item)}>

@@ -70,6 +70,13 @@ const PostAddVasita = () => {
       <FlatList
         data={vasitaData}
         keyExtractor={(item, index) => `vasita-${index}`}
+        ListHeaderComponent={
+          <View className="px-4 bg-sahibindengray border-b border-gray-200 h-10 justify-end">
+            <Text className="text-xs font-bold text-sahibindenstatusgrey pb-1">
+              VASITA
+            </Text>
+          </View>
+        }
         renderItem={({ item, index }) => (
           <View className="bg-white">
             <TouchableOpacity

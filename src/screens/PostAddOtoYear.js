@@ -24,6 +24,13 @@ const PostAddOtoYear = () => {
       <FlatList
         data={years}
         keyExtractor={(item) => item.toString()}
+        ListHeaderComponent={
+          <View className="px-4 bg-sahibindengray border-b border-gray-200 h-10 justify-end">
+            <Text className="text-xs font-bold text-sahibindenstatusgrey pb-1">
+              VASITA{">"} OTOMOBİL
+            </Text>
+          </View>
+        }
         renderItem={({ item }) => (
           <View className="bg-white">
             <TouchableOpacity

@@ -7,8 +7,10 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import CategoryRow from "../components/CategoryRow";
+import { useNavigation } from "@react-navigation/native";
 
 const PostAddOtoModel = ({ route }) => {
+  const navigation = useNavigation();
   const { year } = route.params;
   const markalar = [
     { title: "Audi" },
@@ -47,10 +49,23 @@ const PostAddOtoModel = ({ route }) => {
       <FlatList
         data={markalar}
         keyExtractor={(item, index) => `marka-${index}`}
+        ListHeaderComponent={
+          <View className="px-4 bg-sahibindengray border-b border-gray-200 h-10 justify-end">
+            <Text className="text-xs font-bold text-sahibindenstatusgrey pb-1">
+              VASITA {">"} OTOMOBİL {">"} {year}
+            </Text>
+          </View>
+        }
         renderItem={({ item }) => (
           <TouchableOpacity
             onPress={() => {
-              console.log(year + " model  " + item.title + " marka otomobil");
+              navigation.navigate("Main", {
+                screen: "İlan Ver",
+                params: {
+                  screen: "PostAddModelSelect",
+                  params: { year: year, marka: item.title },
+                },
+              });
             }}
           >
             <CategoryRow title={item.title} section="vasitaoremlak" />
