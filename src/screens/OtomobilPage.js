@@ -60,6 +60,7 @@ const OtomobilPage = () => {
                 description={item.description}
                 color={item.color}
                 section="vasitaoremlak"
+                brand={item.title}
               />
             </TouchableOpacity>
           </View>
