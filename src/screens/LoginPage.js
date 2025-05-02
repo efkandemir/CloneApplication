@@ -20,13 +20,8 @@ const LoginPage = ({ route }) => {
 
   const handlePostAdd = () => {
     setStatus(false);
-    navigation.navigate("Main", {
-      screen: "İlan Ver",
-      params: {
-        screen: "PostAdd",
-        params: { visible: true },
-      },
-    });
+    console.log(status);
+    navigation.navigate("PostAdd", { visible: status });
   };
 
   return (
