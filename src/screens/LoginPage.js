@@ -16,12 +16,15 @@ const LoginPage = ({ route }) => {
   const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [status, setStatus] = useState(false);
 
   const handlePostAdd = () => {
-    setStatus(false);
-    console.log(status);
-    navigation.navigate("PostAdd", { visible: status });
+    navigation.navigate("Main", {
+      screen: "İlan Ver",
+      params: {
+        screen: "PostAdd",
+        params: { visible: true },
+      },
+    });
   };
 
   return (

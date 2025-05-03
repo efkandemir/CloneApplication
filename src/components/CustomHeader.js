@@ -1,8 +1,29 @@
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 import React from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import ExitModal from "../components/ExitModal.js";
+import { useState } from "react";
 
-const CustomHeader = ({ title, showicon, showTwoIcons, showCarIcon }) => {
+const CustomHeader = ({
+  title,
+  showicon,
+  showTwoIcons,
+  showCarIcon,
+  onClose,
+}) => {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const handleClose = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleBack = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
   return (
     <View className="flex-row items-center justify-between w-full h-12 ">
       {showicon && (
@@ -15,6 +36,13 @@ const CustomHeader = ({ title, showicon, showTwoIcons, showCarIcon }) => {
         <Text className="text-lg font-bold text-white">{title}</Text>
       </View>
       <View className="flex-row space-x-1">
+        {!showicon && onClose && (
+          <View className="mr-[-48px]">
+            <TouchableOpacity onPress={handleClose}>
+              <Ionicons name="close" size={30} color="white" />
+            </TouchableOpacity>
+          </View>
+        )}
         {showicon && !showTwoIcons && showCarIcon ? (
           <Ionicons name="car-outline" size={24} color="white" />
         ) : showTwoIcons ? (
@@ -28,6 +56,10 @@ const CustomHeader = ({ title, showicon, showTwoIcons, showCarIcon }) => {
           <View className="w-6" />
         )}
       </View>
+      <ExitModal
+        visible={isModalVisible}
+        onCancel={handleCancel}
+      />
     </View>
   );
 };

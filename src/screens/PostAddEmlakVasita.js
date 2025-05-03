@@ -82,7 +82,7 @@ const PostAddVasita = () => {
             <TouchableOpacity
               onPress={() => {
                 if (item.title === "Otomobil") {
-                  navigation.navigate("PostAddOtomobil");
+                  navigation.navigate("PostAddYear");
                 } else {
                   console.log(item.title + " tıklandı");
                 }

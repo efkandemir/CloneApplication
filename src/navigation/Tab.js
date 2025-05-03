@@ -10,6 +10,7 @@ import MyAccountPage from "../screens/MyAccountPage";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Fontisto from "@expo/vector-icons/Fontisto";
 import SearchStackNavigator from "./SearchStackNavigator";
+import PostAddNavigator from "./PostAddNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -64,19 +65,9 @@ const MyTabs = () => {
       />
       <Tab.Screen
         name="İlan Ver"
-        component={PostAdd}
+        component={PostAddNavigator}
         options={{
-          headerTitle: () => (
-            <CustomHeader
-              title="İlan Ver"
-              showicon={true}
-              showTwoIcons={false}
-              showCarIcon={false}
-            />
-          ),
-          headerStyle: {
-            backgroundColor: "#185e91",
-          },
+          headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <View
               style={{

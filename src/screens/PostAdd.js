@@ -15,7 +15,7 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import CategoryRow from "../components/CategoryRow";
 
 const PostAdd = ({ route }) => {
-  const { visible } = route.params;
+  const { visible } = route.params || false;
   console.log(visible);
   const navigation = useNavigation();
   useEffect(() => {
