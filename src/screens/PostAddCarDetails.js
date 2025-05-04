@@ -12,14 +12,25 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { useState } from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import AracModal from "../components/AracModal";
-
+import StepProgress from "../components/StepProgress";
+import { useNavigation } from "@react-navigation/native";
 const PostAddCarDetails = ({ route }) => {
   const { year } = route.params;
   const { marka } = route.params;
   const [agreed, setAgreed] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [aktifBaslik, setAktifBaslik] = useState("");
+  const [currentStep, setCurrentStep] = useState(1);
 
+  const navigation=useNavigation();
+
+  const handleNext = () => {
+    if (currentStep < 5) {
+      setCurrentStep(currentStep + 1);
+      navigation.navigate('MapPage')
+    }
+  };
+ 
   return (
     <View className="flex-1 bg-sahibindengray">
       <View className="w-full h-9 bg-white items-center justify-center flex-row px-2 border-b border-gray-200">
@@ -433,7 +444,6 @@ const PostAddCarDetails = ({ route }) => {
                       resizeMode: "stretch",
                       marginLeft: 3,
                     }}
-                    
                   />
                 </Pressable>
               </View>
@@ -515,6 +525,11 @@ const PostAddCarDetails = ({ route }) => {
           </View>
         </View>
       </ScrollView>
+      <StepProgress
+        currentStep={currentStep}
+        totalSteps={5}
+        onNext={handleNext}
+      />
     </View>
   );
 };

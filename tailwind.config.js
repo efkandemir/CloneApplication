@@ -19,6 +19,7 @@ module.exports = {
         sahibindentextred: "#7a2534",
         sahibindenstatusgrey: "#7e7e7e",
         sahibindentextgrey: "#989898",
+        progressgreen: "#289973",
       },
     },
   },

@@ -8,6 +8,8 @@ import PostAddOtoYear from "../screens/PostAddOtoYear";
 import PostAddOtoModel from "../screens/PostAddOtoModel";
 import PostAddModelSelect from "../screens/PostAddModelSelect";
 import PostAddCarDetails from "../screens/PostAddCarDetails";
+import MapPage from "../screens/MapPage";
+import AddressSelect from "../screens/AddressSelect";
 const Stack = createNativeStackNavigator();
 const PostAddNavigator = () => {
   return (
@@ -145,6 +147,48 @@ const PostAddNavigator = () => {
           headerTitle: () => (
             <CustomHeader
               title="İlan Ver"
+              showicon={false}
+              showTwoIcons={false}
+              showCarIcon={false}
+              onClose={true}
+            />
+          ),
+          headerStyle: {
+            backgroundColor: "#185e91",
+          },
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="person" size={size} color={color} />
+          ),
+        }}
+      />
+       <Stack.Screen
+        name="MapPage"
+        component={MapPage}
+        options={{
+          headerTitle: () => (
+            <CustomHeader
+              title="İlanın Adresini Giriniz"
+              showicon={false}
+              showTwoIcons={false}
+              showCarIcon={false}
+              onClose={true}
+            />
+          ),
+          headerStyle: {
+            backgroundColor: "#185e91",
+          },
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="person" size={size} color={color} />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="AddressSelect"
+        component={AddressSelect}
+        options={{
+          headerTitle: () => (
+            <CustomHeader
+              title="İlanın Adresini Giriniz"
               showicon={false}
               showTwoIcons={false}
               showCarIcon={false}

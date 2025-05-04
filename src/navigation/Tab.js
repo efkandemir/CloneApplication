@@ -4,7 +4,6 @@ import CustomHeader from "../components/CustomHeader";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import ShowCasePage from "../screens/ShowCasePage";
-import PostAdd from "../screens/PostAdd";
 import ServicesPage from "../screens/ServicesPage";
 import MyAccountPage from "../screens/MyAccountPage";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
@@ -68,6 +67,7 @@ const MyTabs = () => {
         component={PostAddNavigator}
         options={{
           headerShown: false,
+          tabBarStyle: { display: "none" },
           tabBarIcon: ({ color, size }) => (
             <View
               style={{
