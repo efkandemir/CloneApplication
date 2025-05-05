@@ -19,7 +19,7 @@ const StepProgress = ({ currentStep = 1, totalSteps = 5, onNext }) => {
   };
 
   return (
-    <View className="absolute bottom-0 left-0 right-0 bg-white border-t border-gray-200">
+    <View className="absolute bottom-0 left-0 right-0 bg-white border-t border-gray-200 mb-2">
       <View className="flex-row items-center">
         <View className="w-1/2 px-4 py-3">
           <Text className="text-gray-800 font-medium mb-1">

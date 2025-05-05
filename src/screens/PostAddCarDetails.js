@@ -22,15 +22,15 @@ const PostAddCarDetails = ({ route }) => {
   const [aktifBaslik, setAktifBaslik] = useState("");
   const [currentStep, setCurrentStep] = useState(1);
 
-  const navigation=useNavigation();
+  const navigation = useNavigation();
 
   const handleNext = () => {
     if (currentStep < 5) {
       setCurrentStep(currentStep + 1);
-      navigation.navigate('MapPage')
+      navigation.navigate("MapPage");
     }
   };
- 
+
   return (
     <View className="flex-1 bg-sahibindengray">
       <View className="w-full h-9 bg-white items-center justify-center flex-row px-2 border-b border-gray-200">
