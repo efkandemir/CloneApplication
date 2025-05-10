@@ -8,9 +8,7 @@ const AddressSelect = ({ route }) => {
   const { selectedCity } = route.params || { selectedCity: "" };
   const { selectedDistrict } = route.params || { selectedDistrict: "" };
   const { selectedNeighborhood } = route.params || { selectedNeighborhood: "" };
-
   const navigation = useNavigation();
-
 
   const cityDisplay = selectedCity || "İl Seçiniz";
   const districtDisplay = selectedDistrict || "İlçe Seçiniz";
@@ -30,7 +28,6 @@ const AddressSelect = ({ route }) => {
             <ChevronRight size={16} color="gray" />
           </View>
         </TouchableOpacity>
-
 
         <TouchableOpacity
           className="bg-white border-b border-gray-300 px-4 h-10 flex-row justify-between items-center"
@@ -93,7 +90,13 @@ const AddressSelect = ({ route }) => {
         </View>
       </ScrollView>
 
-      <StepProgress currentStep={2} totalSteps={5} onNext={() => {}} />
+      <StepProgress
+        currentStep={2}
+        totalSteps={5}
+        onNext={() => {
+          navigation.navigate("PhotoVideoSelect");
+        }}
+      />
     </View>
   );
 };

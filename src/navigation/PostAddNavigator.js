@@ -11,6 +11,7 @@ import PostAddCarDetails from "../screens/PostAddCarDetails";
 import MapPage from "../screens/MapPage";
 import AddressSelect from "../screens/AddressSelect";
 import AddressDetailsSelect from "../screens/AddressDetailsSelect";
+import PhotoVideoSelect from "../screens/PhotoVideoSelect";
 const Stack = createNativeStackNavigator();
 const PostAddNavigator = () => {
   return (
@@ -162,7 +163,7 @@ const PostAddNavigator = () => {
           ),
         }}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="MapPage"
         component={MapPage}
         options={{
@@ -211,6 +212,27 @@ const PostAddNavigator = () => {
           headerTitle: () => (
             <CustomHeader
               title="İlanın Adresini Seçiniz"
+              showicon={false}
+              showTwoIcons={false}
+              showCarIcon={false}
+              onClose={true}
+            />
+          ),
+          headerStyle: {
+            backgroundColor: "#185e91",
+          },
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="person" size={size} color={color} />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="PhotoVideoSelect"
+        component={PhotoVideoSelect}
+        options={{
+          headerTitle: () => (
+            <CustomHeader
+              title="Fotoğraf / Video Seçin"
               showicon={false}
               showTwoIcons={false}
               showCarIcon={false}
