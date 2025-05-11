@@ -12,6 +12,7 @@ import MapPage from "../screens/MapPage";
 import AddressSelect from "../screens/AddressSelect";
 import AddressDetailsSelect from "../screens/AddressDetailsSelect";
 import PhotoVideoSelect from "../screens/PhotoVideoSelect";
+import ContactInformation from "../screens/ContactInformation";
 const Stack = createNativeStackNavigator();
 const PostAddNavigator = () => {
   return (
@@ -233,6 +234,27 @@ const PostAddNavigator = () => {
           headerTitle: () => (
             <CustomHeader
               title="Fotoğraf / Video Seçin"
+              showicon={false}
+              showTwoIcons={false}
+              showCarIcon={false}
+              onClose={true}
+            />
+          ),
+          headerStyle: {
+            backgroundColor: "#185e91",
+          },
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="person" size={size} color={color} />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="ContactInformation"
+        component={ContactInformation}
+        options={{
+          headerTitle: () => (
+            <CustomHeader
+              title="İletişim Bilgileri"
               showicon={false}
               showTwoIcons={false}
               showCarIcon={false}

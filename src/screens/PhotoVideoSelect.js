@@ -1,25 +1,31 @@
 import {
   View,
   Text,
-  Modal,
+  TouchableOpacity,
   PermissionsAndroid,
   Platform,
   Alert,
   Image,
+  ScrollView,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { launchImageLibrary } from "react-native-image-picker";
+import { useNavigation } from "@react-navigation/native";
 
 const PhotoVideoSelect = () => {
-  const [permissionModalVisible, setPermissionModalVisible] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [hasPermission, setHasPermission] = useState(null);
+  const [selectedImages, setSelectedImages] = useState([]);
+  const navigation = useNavigation();
 
   useEffect(() => {
-    checkAndRequestPermissionOnStart();
+    checkGalleryPermission();
   }, []);
 
   const checkGalleryPermission = async () => {
-    if (Platform.OS !== "android") return true;
+    if (Platform.OS !== "android") {
+      setHasPermission(true);
+      return;
+    }
 
     try {
       const permission =
@@ -28,10 +34,10 @@ const PhotoVideoSelect = () => {
           : PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE;
 
       const hasPermission = await PermissionsAndroid.check(permission);
-      return hasPermission;
+      setHasPermission(hasPermission);
     } catch (err) {
-      console.log("İzin kontrol hatası:", err);
-      return false;
+      console.log("Permission check error:", err);
+      setHasPermission(false);
     }
   };
 
@@ -49,92 +55,118 @@ const PhotoVideoSelect = () => {
         buttonNegative: "Reddet",
       });
 
-      return result === PermissionsAndroid.RESULTS.GRANTED;
+      const granted = result === PermissionsAndroid.RESULTS.GRANTED;
+      setHasPermission(granted);
+      return granted;
     } catch (e) {
-      console.error("İzin isteği hatası:", e);
+      console.error("Permission request error:", e);
       return false;
     }
   };
 
-  const openGallery = () => {
+  const openGallery = async () => {
+    const granted = hasPermission || (await requestGalleryPermission());
+
+    if (!granted) {
+      Alert.alert("Uyarı", "Galeriye erişim izni verilmedi");
+      return;
+    }
+
     launchImageLibrary(
       {
         mediaType: "photo",
         includeBase64: false,
+        selectionLimit: 0,
       },
       (response) => {
         if (response.didCancel) {
-          console.log("Kullanıcı resim seçmeyi iptal etti.");
+          console.log("User cancelled image picker");
         } else if (response.errorCode) {
-          console.error("Galeri hatası:", response.errorCode);
-        } else {
-          setSelectedImage(response.assets[0].uri);
+          console.error("ImagePicker Error: ", response.errorCode);
+        } else if (response.assets && response.assets.length > 0) {
+          const newImages = response.assets.map((asset) => asset.uri);
+          setSelectedImages((prev) => [...prev, ...newImages]);
         }
       }
     );
   };
 
-  const checkAndRequestPermissionOnStart = async () => {
-    const hasPermission = await checkGalleryPermission();
-    if (hasPermission) {
-      openGallery();
-    } else {
-      setPermissionModalVisible(true);
+  const handleContinue = () => {
+    if (selectedImages.length === 0) {
+      Alert.alert("Uyarı", "Devam etmek için en az bir resim seçmelisiniz");
+      return;
     }
+
+    navigation.navigate("ContactInformation", { images: selectedImages });
   };
 
-  const handleRequestPermissionAndOpenGallery = async () => {
-    const granted = await requestGalleryPermission();
-    setPermissionModalVisible(false);
-
-    if (granted) {
-      openGallery();
-    } else {
-      Alert.alert("Uyarı", "Galeri izni verilmedi.");
-    }
+  const removeImage = (uri) => {
+    setSelectedImages((prev) => prev.filter((imageUri) => imageUri !== uri));
   };
 
   return (
-    <View className="flex-1 justify-center items-center bg-gray-100 p-4">
-      {selectedImage && (
-        <Image
-          source={{ uri: selectedImage }}
-          style={{ width: 200, height: 200, marginBottom: 20 }}
-        />
+    <View className="flex-1 bg-white p-4">
+      {selectedImages.length > 0 ? (
+        <View className="flex-1">
+          <Text className="text-gray-800 text-lg font-semibold mb-4">
+            Seçilen Resimler ({selectedImages.length})
+          </Text>
+
+          <ScrollView className="flex-1 mb-4">
+            <View className="flex-row flex-wrap">
+              {selectedImages.map((uri, index) => (
+                <View key={index} className="w-1/3 p-1">
+                  <Image source={{ uri }} className="w-full h-32 rounded-lg" />
+                  <TouchableOpacity
+                    className="absolute top-1 right-1 bg-red-500 rounded-full w-6 h-6 items-center justify-center"
+                    onPress={() => removeImage(uri)}
+                  >
+                    <Text className="text-white">×</Text>
+                  </TouchableOpacity>
+                </View>
+              ))}
+            </View>
+          </ScrollView>
+        </View>
+      ) : (
+        <View className="flex-1 justify-center">
+          {hasPermission === false && (
+            <>
+              <Text className="text-gray-800 text-center mb-6">
+                sahibinden.com uygulamasında fotoğraflara ve videolara erişim
+                izni vermedin.
+              </Text>
+
+              <TouchableOpacity
+                className="bg-gray-200 py-3 px-4 rounded-lg mb-4"
+                onPress={requestGalleryPermission}
+              >
+                <Text className="text-gray-800 font-medium text-center">
+                  Yönet
+                </Text>
+              </TouchableOpacity>
+            </>
+          )}
+        </View>
       )}
 
-      <Modal
-        visible={permissionModalVisible}
-        transparent
-        animationType="fade"
-        onRequestClose={() => setPermissionModalVisible(false)}
-      >
-        <View className="flex-1 justify-center items-center bg-black/50">
-          <View className="bg-white p-6 rounded-lg w-80">
-            <Text className="text-xl font-bold text-gray-800 mb-2">
-              İzin Gerekli
-            </Text>
-            <Text className="text-gray-600 mb-4">
-              Galeriye erişmek için izin vermeniz gerekiyor.
-            </Text>
+      <View className="flex-row justify-between">
+        <TouchableOpacity
+          className="bg-blue-500 py-3 px-6 rounded-lg flex-1 mr-2"
+          onPress={openGallery}
+        >
+          <Text className="text-white font-medium text-center">
+            {selectedImages.length > 0 ? "Daha Fazla Resim Ekle" : "Resim Seç"}
+          </Text>
+        </TouchableOpacity>
 
-            <View className="flex-row justify-end space-x-3">
-              <Text
-                className="px-4 py-2 bg-gray-200 rounded-md text-gray-800"
-                onPress={() => setPermissionModalVisible(false)}
-              >
-                Vazgeç
-              </Text>
-              <Text
-                className="px-4 py-2 bg-blue-500 rounded-md text-white"
-                onPress={handleRequestPermissionAndOpenGallery}
-              >
-                İzin Ver
-              </Text>
-            </View>
-          </View>
-        </View>
-      </Modal>
+        <TouchableOpacity
+          className="bg-green-500 py-3 px-6 rounded-lg flex-1 ml-2"
+          onPress={handleContinue}
+        >
+          <Text className="text-white font-medium text-center">Devam Et</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
