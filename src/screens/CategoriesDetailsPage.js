@@ -3,8 +3,9 @@ import {
   Text,
   ScrollView,
   Image,
-  TouchableOpacity,
+  Dimensions,
   Pressable,
+  FlatList,
   Modal,
 } from "react-native";
 import React, { useState } from "react";
@@ -16,6 +17,10 @@ const CategoriesDetailsPage = ({ route }) => {
   const { ilan } = route.params;
   const [activeTab, setActiveTab] = useState("İlan Bilgileri");
   const phoneNumber = "05431111111";
+  const ilanResimleri = [
+    require("../../assets/images/tir.jpg"),
+    require("../../assets/images/tir2.jpeg"),
+  ];
   const ilanDetay = {
     baslik: { ilan },
     satici: "DEMİR OTOMOTİV",
@@ -51,6 +56,8 @@ const CategoriesDetailsPage = ({ route }) => {
   const makeCall = () => {
     Linking.openURL(`tel:${phoneNumber}`);
   };
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [modalVisible, setModalVisible] = useState(false);
 
   return (
     <View className="flex-1 bg-sahibindengray">
@@ -59,11 +66,29 @@ const CategoriesDetailsPage = ({ route }) => {
           <Text className="text-base  text-center">{ilan}</Text>
         </View>
 
-        <View className="bg-white rounded-lg h-[280px]  justify-center items-center px-2">
-          <Image
-            source={require("../../assets/images/tir.jpg")}
-            className="w-full h-full rounded-lg"
-            resizeMode="contain"
+        <View className="bg-white rounded-lg h-[280px] justify-center items-center overflow-hidden">
+          <FlatList
+            data={ilanResimleri}
+            keyExtractor={(item, index) => index.toString()}
+            horizontal
+            pagingEnabled
+            showsHorizontalScrollIndicator={false}
+            renderItem={({ item, index }) => (
+              <View style={{ width: Dimensions.get("window").width }}>
+                <Pressable
+                  onPress={() => {
+                    setSelectedIndex(index);
+                    setModalVisible(true);
+                  }}
+                >
+                  <Image
+                    source={item}
+                    style={{ width: "100%", height: 280 }}
+                    resizeMode="contain"
+                  />
+                </Pressable>
+              </View>
+            )}
           />
         </View>
 
@@ -226,6 +251,56 @@ const CategoriesDetailsPage = ({ route }) => {
           <FontAwesome5 name="car-alt" size={24} color="black" />
         </Pressable>
       </View>
+      <Modal visible={modalVisible} transparent={true}>
+        <View className="w-full h-full bg-black">
+          <Pressable
+            onPress={() => setModalVisible(false)}
+            style={{
+              position: "absolute",
+              top: 40,
+              right: 20,
+              zIndex: 1,
+              backgroundColor: "rgba(255,255,255,0.6)",
+              borderRadius: 20,
+              padding: 6,
+            }}
+          >
+            <FontAwesome5 name="times" size={16} color="black" />
+          </Pressable>
+
+          <FlatList
+            data={ilanResimleri}
+            keyExtractor={(item, index) => index.toString()}
+            horizontal
+            pagingEnabled
+            initialScrollIndex={selectedIndex}
+            getItemLayout={(data, index) => ({
+              length: Dimensions.get("window").width,
+              offset: Dimensions.get("window").width * index,
+              index,
+            })}
+            renderItem={({ item }) => (
+              <View
+                style={{
+                  width: Dimensions.get("window").width,
+                  height: "100%",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Image
+                  source={item}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    resizeMode: "contain",
+                  }}
+                />
+              </View>
+            )}
+          />
+        </View>
+      </Modal>
     </View>
   );
 };
