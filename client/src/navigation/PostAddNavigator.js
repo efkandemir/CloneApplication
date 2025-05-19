@@ -13,6 +13,7 @@ import AddressSelect from "../screens/AddressSelect";
 import AddressDetailsSelect from "../screens/AddressDetailsSelect";
 import PhotoVideoSelect from "../screens/PhotoVideoSelect";
 import ContactInformation from "../screens/ContactInformation";
+import CompletedPage from "../screens/CompletedPage";
 const Stack = createNativeStackNavigator();
 const PostAddNavigator = () => {
   return (
@@ -261,6 +262,19 @@ const PostAddNavigator = () => {
               onClose={true}
             />
           ),
+          headerStyle: {
+            backgroundColor: "#185e91",
+          },
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="person" size={size} color={color} />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="CompletedPage"
+        component={CompletedPage}
+        options={{
+          headerShown: false,
           headerStyle: {
             backgroundColor: "#185e91",
           },

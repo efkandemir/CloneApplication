@@ -1,12 +1,9 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  ScrollView,
-} from "react-native";
-import CategoryRow from "../components/CategoryRow"; 
+import { View, Text, TouchableOpacity, ScrollView } from "react-native";
+import CategoryRow from "../components/CategoryRow";
 import StepProgress from "../components/StepProgress";
+import { useNavigation } from "@react-navigation/native";
+import CompletedPage from "./CompletedPage";
 
 const options = [
   "Telefon ve Mesaj",
@@ -18,7 +15,10 @@ const options = [
 
 const ContactInformation = () => {
   const [selectedOption, setSelectedOption] = useState("Telefon ve Mesaj");
-
+  const navigation = useNavigation();
+  const handleCompleted = () => {
+    navigation.navigate("CompletedPage");
+  };
   return (
     <View className="flex-1 bg-white">
       <ScrollView className="p-4">
@@ -58,11 +58,7 @@ const ContactInformation = () => {
         ))}
       </ScrollView>
 
-      <StepProgress
-        currentStep={4}
-        totalSteps={5}
-        onNext={() => console.log("Devam Et")}
-      />
+      <StepProgress currentStep={4} totalSteps={5} onNext={handleCompleted} />
     </View>
   );
 };
