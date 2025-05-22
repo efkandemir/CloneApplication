@@ -7,6 +7,11 @@ const userSchema = new mongoose.Schema(
       required: [true, "please add name"],
       trim: true,
     },
+    surname: {
+      type: String,
+      required: [true, "please add secondname"],
+      trim: true,
+    },
     email: {
       type: String,
       required: [true, "please add email"],
@@ -27,4 +32,4 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports=mongoose.model('User',userSchema)
+module.exports = mongoose.model("User", userSchema);
