@@ -11,8 +11,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 import { UsePreventGoBack } from "../components/UsePreventGoBack";
 import axios from "axios";
-import { API_BASE_URL } from '@env';
-
+import { API_BASE_URL } from "@env";
 
 const RegisterScreen = () => {
   UsePreventGoBack();
@@ -36,8 +35,7 @@ const RegisterScreen = () => {
         alert("Lütfen tüm alanları doldurun");
         return;
       }
-      const url = `${API_BASE_URL}/api/v1/auth/register`;
-      const { data } = await axios.post(url, {
+      const { data } = await axios.post("/auth/register", {
         name: name.trim(),
         surname: surname.trim(),
         email: email.trim(),

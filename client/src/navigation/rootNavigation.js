@@ -7,51 +7,54 @@ import CategoriesDetailsPage from "../screens/CategoriesDetailsPage";
 import CustomHeader from "../components/CustomHeader";
 import LoginPage from "../screens/LoginPage";
 import RegisterScreen from "../screens/RegisterScreen";
+import { AuthProvider } from "../Context/authContext";
 
 const Stack = createNativeStackNavigator();
 
 const RootNavigation = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Splash"
-          component={SplashScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="Main"
-          component={MyTabs}
-          options={{ headerShown: false, gestureEnabled: false }}
-        />
-        <Stack.Screen
-          name="CategoriesDetails"
-          component={CategoriesDetailsPage}
-          options={{
-            headerTitle: () => (
-              <CustomHeader
-                title="İlan Detayı"
-                showicon={false}
-                showTwoIcons={true}
-                showCarIcon={false}
-              />
-            ),
-            headerStyle: {
-              backgroundColor: "#185e91",
-            },
-          }}
-        />
-        <Stack.Screen
-          name="LoginPage"
-          component={LoginPage}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="RegisterPage"
-          component={RegisterScreen}
-          options={{ headerShown: false }}
-        />
-      </Stack.Navigator>
+      <AuthProvider>
+        <Stack.Navigator>
+          <Stack.Screen
+            name="Splash"
+            component={SplashScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Main"
+            component={MyTabs}
+            options={{ headerShown: false, gestureEnabled: false }}
+          />
+          <Stack.Screen
+            name="CategoriesDetails"
+            component={CategoriesDetailsPage}
+            options={{
+              headerTitle: () => (
+                <CustomHeader
+                  title="İlan Detayı"
+                  showicon={false}
+                  showTwoIcons={true}
+                  showCarIcon={false}
+                />
+              ),
+              headerStyle: {
+                backgroundColor: "#185e91",
+              },
+            }}
+          />
+          <Stack.Screen
+            name="LoginPage"
+            component={LoginPage}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="RegisterPage"
+            component={RegisterScreen}
+            options={{ headerShown: false }}
+          />
+        </Stack.Navigator>
+      </AuthProvider>
     </NavigationContainer>
   );
 };

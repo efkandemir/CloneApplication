@@ -5,19 +5,26 @@ import {
   Pressable,
   TouchableOpacity,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import CustomInput from "../components/CustomInput";
 import { useNavigation } from "@react-navigation/native";
 import { UsePreventGoBack } from "../components/UsePreventGoBack";
+import { API_BASE_URL } from "@env";
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { AuthContext } from "../Context/authContext";
 
 const LoginPage = ({ route }) => {
+  //Global State
+  const[state,setState]=useContext(AuthContext)
+
   UsePreventGoBack();
   const { details } = route.params;
   const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handlePostAdd = () => {
+  /*const handlePostAdd = () => {
     navigation.navigate("Main", {
       screen: "İlan Ver",
       params: {
@@ -25,8 +32,37 @@ const LoginPage = ({ route }) => {
         params: { visible: true },
       },
     });
+  };*/
+
+  const handleSubmit = async () => {
+    console.log(API_BASE_URL);
+    try {
+      if (!email || !password) {
+        alert("Please Fill All Fields");
+        return;
+      }
+;
+      const { data } = await axios.post("/auth/login", {
+        email,
+        password,
+      });
+      setState(data)
+
+      alert(data?.message || "Kayıt başarılı!");
+      await AsyncStorage.setItem("@auth", JSON.stringify(data));
+      console.log("Login Data ==>", { email, password });
+      await getLocalStorageData();
+    } catch (error) {
+      alert(error?.response?.data?.message || "Bir hata oluştu.");
+      console.log(error);
+    }
   };
 
+  //temp function to check local storage data
+  const getLocalStorageData = async () => {
+    let data = await AsyncStorage.getItem("@auth");
+    console.log("Local Storage ==> ", data);
+  };
   return (
     <SafeAreaView className="flex-1 bg-sahibindengray p-4">
       <Pressable
@@ -71,7 +107,7 @@ const LoginPage = ({ route }) => {
 
         <TouchableOpacity
           className="bg-blue-600 py-4 rounded-md mb-4"
-          onPress={() => handlePostAdd()}
+          onPress={handleSubmit}
         >
           <Text className="text-white text-center font-semibold">
             E-posta ile giriş yap
