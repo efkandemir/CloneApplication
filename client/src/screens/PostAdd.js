@@ -13,14 +13,28 @@ import { useEffect } from "react";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import CategoryRow from "../components/CategoryRow";
+import { useContext } from "react";
+import { AuthContext } from "../Context/authContext";
 
 const PostAdd = ({ route }) => {
   const { visible } = route.params || false;
-  console.log(visible);
+  const [state, setState] = useContext(AuthContext);
+  const isLoggedIn = !!state?.user;
+
   const navigation = useNavigation();
   useEffect(() => {
-    if (!visible) {
-      navigation.navigate("LoginPage", { details: "postadd" });
+    if (visible) {
+      if (user) {
+        navigation.navigate("Main", {
+          screen: "Arama",
+          params: {
+            screen: "CategoriesPage",
+            params: { showModal: true },
+          },
+        });
+      } else {
+        navigation.navigate("LoginPage", { details: "postadd" });
+      }
     }
   }, [visible]);
   const categories = [

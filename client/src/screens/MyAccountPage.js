@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { AuthContext } from "../Context/authContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const SectionHeader = ({ title }) => (
   <View className="bg-sahibindengray px-4 py-2">
@@ -11,19 +13,11 @@ const SectionHeader = ({ title }) => (
   </View>
 );
 
-function MenuItem({ label, isNew }) {
-  const navigation = useNavigation();
-
+function MenuItem({ label, isNew, onPress }) {
   return (
     <TouchableOpacity
       className="flex-row items-center justify-between bg-white px-4 py-3 border-b border-gray-200"
-      onPress={() => {
-        if (label === "Giriş Yap") {
-          navigation.navigate("LoginPage", { details: "myaccounts" });
-        } else if (label === "Hesap Aç") {
-          navigation.navigate("RegisterPage");
-        }
-      }}
+      onPress={onPress}
     >
       <Text className="text-black">{label}</Text>
       <View className="flex-row items-center space-x-1">
@@ -39,6 +33,18 @@ function MenuItem({ label, isNew }) {
 }
 
 const MyAccountPage = () => {
+  const navigation = useNavigation();
+  const [state, setState] = useContext(AuthContext);
+  const isLoggedIn = !!state?.user;
+  const handleLogout = async () => {
+    try {
+      setState({ token: "", user: null });
+      await AsyncStorage.removeItem("@auth");
+      console.log("Logout successfully");
+    } catch (error) {
+      console.log("Çıkış yapılırken hata oluştu:", error);
+    }
+  };
   return (
     <ScrollView className="flex-1 bg-gray-100">
       <View className="flex-row items-center justify-between bg-white p-3 border-b border-gray-200 mt-6">
@@ -50,10 +56,24 @@ const MyAccountPage = () => {
         </View>
       </View>
 
-      <View className="mt-5">
-        <MenuItem label="Hesap Aç" />
-        <MenuItem label="Giriş Yap" />
-      </View>
+      {!isLoggedIn ? (
+        <View className="mt-5">
+          <MenuItem
+            label="Hesap Aç"
+            onPress={() => navigation.navigate("RegisterPage")}
+          />
+          <MenuItem
+            label="Giriş Yap"
+            onPress={() =>
+              navigation.navigate("LoginPage", { details: "myaccounts" })
+            }
+          />
+        </View>
+      ) : (
+        <View className="mt-5">
+          <MenuItem label="Çıkış Yap" onPress={handleLogout} />
+        </View>
+      )}
 
       <View className="mt-5">
         <SectionHeader title="İlan Yönetimi" />

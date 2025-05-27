@@ -16,23 +16,13 @@ import { AuthContext } from "../Context/authContext";
 
 const LoginPage = ({ route }) => {
   //Global State
-  const[state,setState]=useContext(AuthContext)
+  const [state, setState] = useContext(AuthContext);
 
   UsePreventGoBack();
   const { details } = route.params;
   const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  /*const handlePostAdd = () => {
-    navigation.navigate("Main", {
-      screen: "İlan Ver",
-      params: {
-        screen: "PostAdd",
-        params: { visible: true },
-      },
-    });
-  };*/
 
   const handleSubmit = async () => {
     console.log(API_BASE_URL);
@@ -41,16 +31,14 @@ const LoginPage = ({ route }) => {
         alert("Please Fill All Fields");
         return;
       }
-;
       const { data } = await axios.post("/auth/login", {
         email,
         password,
       });
-      setState(data)
-
-      alert(data?.message || "Kayıt başarılı!");
+      setState(data);
       await AsyncStorage.setItem("@auth", JSON.stringify(data));
       console.log("Login Data ==>", { email, password });
+       navigation.navigate("Main", { screen: "Bana Özel" });
       await getLocalStorageData();
     } catch (error) {
       alert(error?.response?.data?.message || "Bir hata oluştu.");
@@ -116,7 +104,12 @@ const LoginPage = ({ route }) => {
 
         <Text className="text-center mb-4">
           Henüz hesabın yok mu?{" "}
-          <Text className="text-blue-600">Hesap aç ▸</Text>
+          <Text
+            className="text-blue-600"
+            onPress={handleSubmit}
+          >
+            Hesap aç ▸
+          </Text>
         </Text>
 
         <View className="flex-row items-center my-4">

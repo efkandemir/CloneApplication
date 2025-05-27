@@ -2,7 +2,8 @@ import { View, Text, Image, TouchableOpacity } from "react-native";
 import React from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import ExitModal from "../components/ExitModal.js";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "../Context/authContext.js";
 
 const CustomHeader = ({
   title,
@@ -12,6 +13,8 @@ const CustomHeader = ({
   onClose,
 }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [state] = useContext(AuthContext);
+  const user = state?.user;
 
   const handleClose = () => {
     setIsModalVisible(true);
@@ -32,8 +35,14 @@ const CustomHeader = ({
           className="w-7 h-7 ml-[-6px]"
         />
       )}
-      <View className="flex-1 items-center justify-center ml-1 ">
-        <Text className="text-lg font-bold text-white">{title}</Text>
+      <View className="flex-1 items-center justify-center ml-1">
+        {user && title === "Bana Özel" ? (
+          <Text className="text-lg font-bold text-white">
+            {user.name} {user.surname}
+          </Text>
+        ) : (
+          <Text className="text-lg font-bold text-white">{title}</Text>
+        )}
       </View>
       <View className="flex-row space-x-1">
         {!showicon && onClose && (
@@ -56,10 +65,7 @@ const CustomHeader = ({
           <View className="w-6" />
         )}
       </View>
-      <ExitModal
-        visible={isModalVisible}
-        onCancel={handleCancel}
-      />
+      <ExitModal visible={isModalVisible} onCancel={handleCancel} />
     </View>
   );
 };
