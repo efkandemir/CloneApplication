@@ -1,18 +1,34 @@
 import { View, Text, TouchableOpacity, ScrollView } from "react-native";
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { ChevronRight, HelpCircle } from "lucide-react-native";
 import StepProgress from "../components/StepProgress";
 import { useNavigation } from "@react-navigation/native";
+import { AddCarContext } from "../Context/addcarContext";
 
 const AddressSelect = ({ route }) => {
-  const { selectedCity } = route.params || { selectedCity: "" };
-  const { selectedDistrict } = route.params || { selectedDistrict: "" };
-  const { selectedNeighborhood } = route.params || { selectedNeighborhood: "" };
+  const {
+    selectedCity = "",
+    selectedDistrict = "",
+    selectedNeighborhood = "",
+  } = route.params || {};
   const navigation = useNavigation();
+  const { carData, setCarData } = useContext(AddCarContext);
 
   const cityDisplay = selectedCity || "İl Seçiniz";
   const districtDisplay = selectedDistrict || "İlçe Seçiniz";
   const neighborhoodDisplay = selectedNeighborhood || "Mahalle Seçiniz";
+
+  // Eğer tüm adres bileşenleri seçilmişse, context'e yaz
+  useEffect(() => {
+    if (selectedCity && selectedDistrict && selectedNeighborhood) {
+      setCarData((prev) => ({
+        ...prev,
+        city: selectedCity,
+        district: selectedDistrict,
+        neighborhood: selectedNeighborhood,
+      }));
+    }
+  }, [selectedCity, selectedDistrict, selectedNeighborhood]);
 
   return (
     <View className="flex-1 bg-gray-100 relative">
@@ -45,10 +61,10 @@ const AddressSelect = ({ route }) => {
 
         <TouchableOpacity
           className={`bg-white border-b border-gray-300 px-4 h-10 flex-row justify-between items-center ${
-            !selectedCity && !selectedDistrict ? "opacity-50" : ""
+            !selectedCity ? "opacity-50" : ""
           }`}
           onPress={() => {
-            if (selectedCity || !selectedCity) {
+            if (selectedCity) {
               navigation.navigate("AddressDetailsSelect", { value: "ilçe" });
             }
           }}
@@ -63,7 +79,7 @@ const AddressSelect = ({ route }) => {
 
         <TouchableOpacity
           className={`bg-white border-b border-gray-300 px-4 py-3 flex-row justify-between items-center ${
-            !selectedDistrict && !selectedCity ? "opacity-50" : ""
+            !selectedDistrict ? "opacity-50" : ""
           }`}
           onPress={() => {
             if (selectedDistrict) {

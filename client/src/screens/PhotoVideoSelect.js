@@ -8,18 +8,24 @@ import {
   Image,
   ScrollView,
 } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { launchImageLibrary } from "react-native-image-picker";
 import { useNavigation } from "@react-navigation/native";
+import { AddCarContext } from "../Context/addcarContext";
 
 const PhotoVideoSelect = () => {
   const [hasPermission, setHasPermission] = useState(null);
   const [selectedImages, setSelectedImages] = useState([]);
   const navigation = useNavigation();
+  const { carData, setCarData } = useContext(AddCarContext);
 
   useEffect(() => {
     checkGalleryPermission();
   }, []);
+
+  useEffect(() => {
+    setCarData((prev) => ({ ...prev, selectedImages }));
+  }, [selectedImages]);
 
   const checkGalleryPermission = async () => {
     if (Platform.OS !== "android") {
@@ -97,7 +103,7 @@ const PhotoVideoSelect = () => {
       return;
     }
 
-    navigation.navigate("ContactInformation", { images: selectedImages });
+    navigation.navigate("ContactInformation"); // Artık images parametresine gerek yok
   };
 
   const removeImage = (uri) => {

@@ -9,14 +9,15 @@ import {
 } from "react-native";
 import CategoryRow from "../components/CategoryRow";
 import Icon from "react-native-vector-icons/Ionicons";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import AracModal from "../components/AracModal";
 import StepProgress from "../components/StepProgress";
 import { useNavigation } from "@react-navigation/native";
-const PostAddCarDetails = ({ route }) => {
-  const { year } = route.params;
-  const { marka } = route.params;
+import { AddCarContext } from "../Context/addcarContext";
+const PostAddCarDetails = () => {
+  const { carData, setCarData } = useContext(AddCarContext);
+
   const [agreed, setAgreed] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [aktifBaslik, setAktifBaslik] = useState("");
@@ -35,23 +36,32 @@ const PostAddCarDetails = ({ route }) => {
     <View className="flex-1 bg-sahibindengray">
       <View className="w-full h-9 bg-white items-center justify-center flex-row px-2 border-b border-gray-200">
         <Text className="text-base">
-          Vasıta {">"} Otomobil {">"} {year} {">"} {marka}
+          Vasıta {">"} Otomobil {">"} {carData.year} {">"} {carData.marka}
         </Text>
       </View>
 
       <ScrollView className=" bg-sahibindengray ">
         <View className="bg-white ">
-          <CategoryRow title={`XXX 1.y ${marka} el arabası`} brand={marka} />
+          <CategoryRow
+            title={`XXX 1.y ${carData.marka} el arabası`}
+            brand={carData.marka}
+          />
 
           <View className="flex-row flex-wrap mb-2 border-b border-gray-200 ml-3 mt-2">
             <Text className="text-black text-sm mr-2">• Dizel</Text>
             <Text className="text-black text-sm mr-2">• Camlı Van 5 kapı</Text>
             <Text className="text-black text-sm mr-2">• 225 HP</Text>
-            <Text className="text-black text-sm mr-2">•{year}</Text>
+            <Text className="text-black text-sm mr-2">•{carData.year}</Text>
           </View>
           <View className="flex-row items-center ml-3  border-b border-gray-200 pb-3">
             <Text className="text-black font-semibold w-1/3">Vites</Text>
-            <TextInput className="p-1 ml-2 " placeholder="Manuel" multiline />
+            <TextInput
+              className="p-1 ml-2 "
+              placeholder="Manuel"
+              multiline
+              onChangeText={(text) => setCarData({ ...carData, vites: text })}
+              value={carData.vites}
+            />
           </View>
           <View className="flex-row items-center my-1 ml-3  border-b border-gray-200 pb-3">
             <Text className="text-black font-semibold w-1/3">Kasa Tipi</Text>
@@ -59,6 +69,10 @@ const PostAddCarDetails = ({ route }) => {
               className="p-1 ml-2 "
               placeholder="Camlı Van"
               multiline
+              onChangeText={(text) =>
+                setCarData({ ...carData, kasatipi: text })
+              }
+              value={carData.kasatipi}
             />
           </View>
           <View className="flex-row items-center my-1 ml-3  border-b border-gray-200 pb-3">
@@ -66,7 +80,8 @@ const PostAddCarDetails = ({ route }) => {
             <TextInput
               className="p-1 ml-2 "
               placeholder="4x2 (Önden Çekişli)"
-              multiline
+              onChangeText={(text) => setCarData({ ...carData, çekiş: text })}
+              value={carData.çekiş}
             />
           </View>
           <View className="flex-row items-center my-3 ml-3 border-b border-gray-200 pb-1 mt-4">
@@ -74,6 +89,8 @@ const PostAddCarDetails = ({ route }) => {
             <TextInput
               className="flex-1  rounded-md p-1 ml-2"
               placeholder="Başlık Girin"
+              onChangeText={(text) => setCarData({ ...carData, title: text })}
+              value={carData.title}
             />
           </View>
 
@@ -83,16 +100,22 @@ const PostAddCarDetails = ({ route }) => {
               className="p-1 ml-2 "
               placeholder="Açıklama Girin"
               multiline
+              onChangeText={(text) =>
+                setCarData({ ...carData, description: text })
+              }
+              value={carData.description}
             />
           </View>
 
-          <View className="flex-row items-center my-3 ml-3  pb-3 border-b border-gray-200">
+          <View className="flex-row items-center my-3 ml-3 pb-3 border-b border-gray-200">
             <Text className="text-black font-semibold w-1/3">Fiyat</Text>
             <View className="flex-1 flex-row items-center ml-2">
               <TextInput
-                className="flex-1  rounded-md p-1"
+                className="flex-1 rounded-md p-1"
                 placeholder="Fiyat Girin"
                 keyboardType="numeric"
+                onChangeText={(text) => setCarData({ ...carData, price: text })}
+                value={carData.price}
               />
               <Text className="ml-2 text-black">TL</Text>
             </View>
@@ -105,54 +128,73 @@ const PostAddCarDetails = ({ route }) => {
           <View className="flex-row items-center my-3 ml-3">
             <Text className="text-black font-semibold w-1/3">Km</Text>
             <TextInput
-              className="flex-1  rounded-md p-1 ml-2"
+              className="flex-1 rounded-md p-1 ml-2"
               placeholder="Km Girin"
               keyboardType="numeric"
+              onChangeText={(text) => setCarData({ ...carData, km: text })}
+              value={carData.km}
             />
           </View>
 
           <View className="flex-row items-center my-3 ml-3">
             <Text className="text-black font-semibold w-1/3">Şasi</Text>
             <TextInput
-              className="flex-1  rounded-md p-1 ml-2"
+              className="flex-1 rounded-md p-1 ml-2"
               placeholder="Şasi Numarası Girin"
+              onChangeText={(text) =>
+                setCarData({ ...carData, chassisNumber: text })
+              }
+              value={carData.chassisNumber}
             />
           </View>
 
           <View className="flex-row items-center my-3 ml-3">
-            <Text className="text-black  font-semibold w-1/3">
+            <Text className="text-black font-semibold w-1/3">
               Koltuk Sayısı
             </Text>
             <TextInput
-              className="flex-1  rounded-md p-1 ml-2"
+              className="flex-1 rounded-md p-1 ml-2"
               placeholder="4+1"
-              value="4+1"
+              onChangeText={(text) =>
+                setCarData({ ...carData, seatCount: text })
+              }
+              value={carData.seatCount}
             />
           </View>
 
           <View className="flex-row items-center my-3 ml-3">
             <Text className="text-black font-semibold w-1/3">Renk</Text>
             <TextInput
-              className="flex-1  rounded-md p-1 ml-2"
+              className="flex-1 rounded-md p-1 ml-2"
               placeholder="Renk Girin"
+              onChangeText={(text) => setCarData({ ...carData, color: text })}
+              value={carData.color}
             />
           </View>
 
           <View className="flex-row items-center my-3 ml-3">
             <Text className="text-black font-semibold w-1/3">Ruhsat Kaydı</Text>
             <TextInput
-              className="flex-1  rounded-md p-1 ml-2"
+              className="flex-1 rounded-md p-1 ml-2"
               placeholder="Ruhsat Kaydı Girin"
+              onChangeText={(text) =>
+                setCarData({ ...carData, licenseRecord: text })
+              }
+              value={carData.licenseRecord}
             />
           </View>
 
-          <View className="flex-row items-center my-3 mb-6 ml-3 ">
+          <View className="flex-row items-center my-3 mb-6 ml-3">
             <Text className="text-black font-semibold w-1/3">
               Ağır Hasar Kaydı
             </Text>
             <TextInput
-              className="flex-1  rounded-md p-1 ml-2"
+              className="flex-1 rounded-md p-1 ml-2"
               placeholder="Var/Yok"
+              onChangeText={(text) =>
+                setCarData({ ...carData, damageRecord: text })
+              }
+              value={carData.damageRecord}
             />
           </View>
 
@@ -165,8 +207,10 @@ const PostAddCarDetails = ({ route }) => {
               Araç Plakası
             </Text>
             <TextInput
-              className="flex-1  rounded-md p-1 ml-2"
+              className="flex-1 rounded-md p-1 ml-2"
               placeholder="Plakayı girin"
+              onChangeText={(text) => setCarData({ ...carData, plate: text })}
+              value={carData.plate}
             />
           </View>
 

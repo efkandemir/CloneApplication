@@ -5,12 +5,14 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import CategoryRow from "../components/CategoryRow";
 import { useNavigation } from "@react-navigation/native";
+import { AddCarContext } from "../Context/addcarContext";
 
 const PostAddOtoYear = () => {
   const navigation = useNavigation();
+   const { carData, setCarData } = useContext(AddCarContext);
   const years = [
     2024, 2023, 2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015, 2014, 2013,
     2012, 2011, 2010, 2009, 2008, 2007, 2006, 2005, 2004, 2003, 2002, 2001,
@@ -36,11 +38,12 @@ const PostAddOtoYear = () => {
             <TouchableOpacity
               className=" px-1 m-1 rounded-lg"
               onPress={() => {
+                setCarData({ ...carData, year: item });
+
                 navigation.navigate("Main", {
                   screen: "İlan Ver",
                   params: {
                     screen: "PostAddOtoModel",
-                    params: { year: item },
                   },
                 });
               }}

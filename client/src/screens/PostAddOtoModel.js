@@ -5,13 +5,14 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import CategoryRow from "../components/CategoryRow";
 import { useNavigation } from "@react-navigation/native";
+import { AddCarContext } from "../Context/addcarContext";
 
-const PostAddOtoModel = ({ route }) => {
+const PostAddOtoModel = () => {
   const navigation = useNavigation();
-  const { year } = route.params;
+  const { carData, setCarData } = useContext(AddCarContext);
   const markalar = [
     { title: "Audi" },
     { title: "BMW" },
@@ -52,18 +53,19 @@ const PostAddOtoModel = ({ route }) => {
         ListHeaderComponent={
           <View className="px-4 bg-sahibindengray border-b border-gray-200 h-10 justify-end">
             <Text className="text-xs font-bold text-sahibindenstatusgrey pb-1">
-              VASITA {">"} OTOMOBİL {">"} {year}
+              VASITA {">"} OTOMOBİL {">"} {carData.year}
             </Text>
           </View>
         }
         renderItem={({ item }) => (
           <TouchableOpacity
             onPress={() => {
+              setCarData({ ...carData, marka: item.title });
+
               navigation.navigate("Main", {
                 screen: "İlan Ver",
                 params: {
                   screen: "PostAddModelSelect",
-                  params: { year: year, marka: item.title },
                 },
               });
             }}
