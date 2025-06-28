@@ -35,6 +35,7 @@ const RegisterScreen = () => {
         alert("Lütfen tüm alanları doldurun");
         return;
       }
+      console.log("istek gönderiliyor");
       const { data } = await axios.post("/auth/register", {
         name: name.trim(),
         surname: surname.trim(),

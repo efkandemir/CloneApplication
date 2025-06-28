@@ -15,7 +15,7 @@ const ExitModal = ({ visible, onCancel }) => {
             İlan verme adımından çıkmak istediğinize emin misiniz?
           </Text>
 
-          <View className="flex-row justify-between mx-8">
+          <View className="flex-row justify-between mx-6">
             <TouchableOpacity
               className="bg-white px-8 py-2  border-sahibindenblue border"
               onPress={() => {

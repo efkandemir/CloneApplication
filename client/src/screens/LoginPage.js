@@ -9,7 +9,6 @@ import React, { useContext, useState } from "react";
 import CustomInput from "../components/CustomInput";
 import { useNavigation } from "@react-navigation/native";
 import { UsePreventGoBack } from "../components/UsePreventGoBack";
-import { API_BASE_URL } from "@env";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AuthContext } from "../Context/authContext";
@@ -25,12 +24,12 @@ const LoginPage = ({ route }) => {
   const [password, setPassword] = useState("");
 
   const handleSubmit = async () => {
-    console.log(API_BASE_URL);
     try {
       if (!email || !password) {
         alert("Please Fill All Fields");
         return;
       }
+      console.log("istek gönderiliyor");
       const { data } = await axios.post("/auth/login", {
         email,
         password,
@@ -38,7 +37,7 @@ const LoginPage = ({ route }) => {
       setState(data);
       await AsyncStorage.setItem("@auth", JSON.stringify(data));
       console.log("Login Data ==>", { email, password });
-       navigation.navigate("Main", { screen: "Bana Özel" });
+      navigation.navigate("Main", { screen: "Bana Özel" });
       await getLocalStorageData();
     } catch (error) {
       alert(error?.response?.data?.message || "Bir hata oluştu.");
@@ -63,7 +62,7 @@ const LoginPage = ({ route }) => {
               screen: "Arama",
               params: {
                 screen: "CategoriesPage",
-                params: { showModal: true },
+                //params: { showModal: true },
               },
             });
           }
@@ -104,10 +103,7 @@ const LoginPage = ({ route }) => {
 
         <Text className="text-center mb-4">
           Henüz hesabın yok mu?{" "}
-          <Text
-            className="text-blue-600"
-            onPress={handleSubmit}
-          >
+          <Text className="text-blue-600" onPress={handleSubmit}>
             Hesap aç ▸
           </Text>
         </Text>

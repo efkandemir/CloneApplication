@@ -17,26 +17,21 @@ import { useContext } from "react";
 import { AuthContext } from "../Context/authContext";
 
 const PostAdd = ({ route }) => {
-  const { visible } = route.params || false;
   const [state, setState] = useContext(AuthContext);
-  const isLoggedIn = !!state?.user;
+  const user = state?.user;
 
   const navigation = useNavigation();
   useEffect(() => {
-    if (visible) {
-      if (user) {
-        navigation.navigate("Main", {
-          screen: "Arama",
-          params: {
-            screen: "CategoriesPage",
-            params: { showModal: true },
-          },
-        });
-      } else {
+    const timeout = setTimeout(() => {
+      if (!user) {
         navigation.navigate("LoginPage", { details: "postadd" });
+      } else {
+        console.log("kullanıcı yok");
       }
-    }
-  }, [visible]);
+    }, 0);
+
+    return () => clearTimeout(timeout); // cleanup
+  }, [user]);
   const categories = [
     {
       id: 1,
