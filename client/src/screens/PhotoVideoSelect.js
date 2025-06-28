@@ -12,6 +12,8 @@ import React, { useState, useEffect, useContext } from "react";
 import { launchImageLibrary } from "react-native-image-picker";
 import { useNavigation } from "@react-navigation/native";
 import { AddCarContext } from "../Context/addcarContext";
+import storage from "@react-native-firebase/storage";
+import uuid from "react-native-uuid";
 
 const PhotoVideoSelect = () => {
   const [hasPermission, setHasPermission] = useState(null);
@@ -97,13 +99,56 @@ const PhotoVideoSelect = () => {
     );
   };
 
-  const handleContinue = () => {
+  const uploadImagesToFirebase = async (imageUris, ilanId) => {
+    const uploadedUrls = [];
+
+    for (let uri of imageUris) {
+      try {
+        const filename = `${uuid.v4().toString()}.jpg`;
+        const path = `ilanlar/${ilanId}/${filename}`;
+        const ref = storage().ref(path);
+
+        const filePath =
+          Platform.OS === "android" && uri.startsWith("file://")
+            ? uri.replace("file://", "")
+            : uri;
+
+        await ref.putFile(filePath);
+        const downloadURL = await ref.getDownloadURL();
+        uploadedUrls.push(downloadURL);
+      } catch (error) {
+        console.error("Yükleme hatası:", error);
+        throw error; // Hata olursa dışarı fırlatabiliriz ki handleContinue yakalasın
+      }
+    }
+
+    return uploadedUrls;
+  };
+
+  const handleContinue = async () => {
     if (selectedImages.length === 0) {
       Alert.alert("Uyarı", "Devam etmek için en az bir resim seçmelisiniz");
       return;
     }
 
-    navigation.navigate("ContactInformation"); // Artık images parametresine gerek yok
+    try {
+      const ilanId = carData.ilanId;
+      if (!ilanId) {
+        Alert.alert("Hata", "İlan ID bulunamadı");
+        return;
+      }
+
+      const urls = await uploadImagesToFirebase(selectedImages, ilanId);
+
+      setCarData((prev) => ({
+        ...prev,
+        firebaseImageUrls: urls,
+      }));
+
+      navigation.navigate("ContactInformation");
+    } catch (err) {
+      Alert.alert("Yükleme Hatası", err.message || "Fotoğraflar yüklenemedi");
+    }
   };
 
   const removeImage = (uri) => {

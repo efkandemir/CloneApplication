@@ -1,9 +1,10 @@
 import React, { createContext, useState } from "react";
-
+import uuid from 'react-native-uuid';
 export const AddCarContext = createContext();
 
 export const AddCarProvider = ({ children }) => {
   const [carData, setCarData] = useState({
+    ilanId: uuid.v4(),
     year: "",
     marka: "",
     vites: "",
