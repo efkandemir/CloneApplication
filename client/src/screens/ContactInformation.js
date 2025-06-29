@@ -1,6 +1,8 @@
 import React, { useState, useContext } from "react";
+
 import {
   View,
+  Alert,
   Text,
   TouchableOpacity,
   ScrollView,
@@ -9,9 +11,9 @@ import {
 import CategoryRow from "../components/CategoryRow";
 import StepProgress from "../components/StepProgress";
 import { useNavigation } from "@react-navigation/native";
-import CompletedPage from "./CompletedPage";
 import { AuthContext } from "../Context/authContext";
 import { AddCarContext } from "../Context/addcarContext";
+import axios from "axios";
 
 const options = [
   "Telefon ve Mesaj",
@@ -27,8 +29,30 @@ const ContactInformation = () => {
   const [state] = useContext(AuthContext);
   const user = state?.user;
   const { carData, setCarData } = useContext(AddCarContext);
-  const handleCompleted = () => {
-    navigation.navigate("CompletedPage");
+  const handleCompleted = async () => {
+    console.log("Kullanılan token:", state?.token);
+    try {
+      const response = await axios.post("vehicle/add-vehicle", carData, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: state?.token, // sadece token, Bearer yok
+        },
+      });
+
+      if (response.status === 201 || response.status === 200) {
+        Alert.alert("Başarılı", "İlan başarıyla kaydedildi.");
+        navigation.navigate("CompletedPage");
+      } else {
+        Alert.alert("Hata", "İlan kaydedilemedi.");
+      }
+    } catch (error) {
+      console.error("Axios Hatası:", error);
+      Alert.alert(
+        "Sunucu Hatası",
+        error?.response?.data?.error || "Bir hata oluştu"
+      );
+    }
+    //buraya yaz
   };
 
   return (

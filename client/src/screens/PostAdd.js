@@ -22,16 +22,13 @@ const PostAdd = ({ route }) => {
 
   const navigation = useNavigation();
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      if (!user) {
-        navigation.navigate("LoginPage", { details: "postadd" });
-      } else {
-        console.log("kullanıcı yok");
-      }
-    }, 0);
-
-    return () => clearTimeout(timeout); // cleanup
+    if (!user) {
+      navigation.navigate("LoginPage", { details: "postadd" });
+    } else {
+      console.log("kullanıcı var");
+    }
   }, [user]);
+
   const categories = [
     {
       id: 1,

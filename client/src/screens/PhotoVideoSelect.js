@@ -142,7 +142,7 @@ const PhotoVideoSelect = () => {
 
       setCarData((prev) => ({
         ...prev,
-        firebaseImageUrls: urls,
+        selectedImages: urls,
       }));
 
       navigation.navigate("ContactInformation");
