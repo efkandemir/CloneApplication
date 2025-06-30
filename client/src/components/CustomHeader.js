@@ -20,10 +20,6 @@ const CustomHeader = ({
     setIsModalVisible(true);
   };
 
-  const handleBack = () => {
-    setIsModalVisible(false);
-  };
-
   const handleCancel = () => {
     setIsModalVisible(false);
   };
@@ -35,7 +31,7 @@ const CustomHeader = ({
           className="w-7 h-7 ml-[-6px]"
         />
       )}
-      <View className="flex-1 items-center justify-center ml-1">
+      <View className="flex-1 items-center justify-center ml-[-28px]">
         {user && title === "Bana Özel" ? (
           <Text className="text-lg font-bold text-white">
             {user.name} {user.surname}
@@ -55,7 +51,7 @@ const CustomHeader = ({
         {showicon && !showTwoIcons && showCarIcon ? (
           <Ionicons name="car-outline" size={24} color="white" />
         ) : showTwoIcons ? (
-          <View className="flex-row mr-[-35px]">
+          <View className="flex-row mr-[0px]">
             <Ionicons name="car-outline" size={26} color="white" />
             <Ionicons name="star-outline" size={24} color="white" />
           </View>
